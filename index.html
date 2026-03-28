@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>6. Semester</title><!-- App-Titel hier ändern -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+<!-- LOGIN -->
+<div id="screen-login">
+  <div class="login-card">
+    <div class="login-logo">
+      <h1>6. Semester</h1><!-- App-Titel hier ändern -->
+      <p>Bitte melde dich an, um fortzufahren</p>
+    </div>
+    <div class="login-field">
+      <label for="login-input">Passwort</label>
+      <div class="login-pw-wrap">
+        <input type="password" id="login-input" placeholder="Passwort eingeben…" autocomplete="current-password">
+        <button class="login-eye" id="login-eye" tabindex="-1" aria-label="Passwort anzeigen">👁</button>
+      </div>
+    </div>
+    <label class="login-remember">
+      <input type="checkbox" id="login-remember"> Auf diesem Gerät merken
+    </label>
+    <div class="login-error-msg" id="login-errmsg"></div>
+    <button class="login-btn" id="login-btn">Einloggen</button>
+  </div>
+</div>
+
+<!-- FÄCHERAUSWAHL -->
+<div id="screen-subject" class="hidden">
+  <div class="main-logo">
+    <h1>6. Semester</h1><!-- App-Titel hier ändern -->
+    <p>Welches Fach möchtest du lernen?</p>
+  </div>
+  <div class="subject-grid" id="subject-grid"></div>
+</div>
+
+<!-- HAUPTMENÜ (nach Fachauswahl) -->
+<div id="screen-main" class="hidden">
+  <div class="subj-hdr">
+    <button class="back-btn" onclick="showScreen('screen-subject')">← Fächer</button>
+    <span class="subj-hdr-title" id="main-subject-title"></span>
+  </div>
+  <div class="main-content">
+    <div class="main-logo">
+      <p>Was möchtest du heute lernen?</p>
+    </div>
+    <div class="main-grid">
+      <button class="main-card" onclick="kk_init(); showScreen('screen-karten');">
+        <span class="main-card-icon">📚</span>
+        <span class="main-card-title">Karteikarten</span>
+        <span class="main-card-sub">Fragen &amp; Antworten</span>
+      </button>
+      <button class="main-card" onclick="lt_init(); showScreen('screen-luecken');">
+        <span class="main-card-icon">✏️</span>
+        <span class="main-card-title">Lückentext</span>
+        <span class="main-card-sub">Wissen testen</span>
+      </button>
+      <button class="main-card" onclick="tl_init(); showScreen('screen-theory-list');">
+        <span class="main-card-icon">📖</span>
+        <span class="main-card-title">Theorie</span>
+        <span class="main-card-sub">Erklärungen lesen</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- KARTEIKARTEN -->
+<div id="screen-karten" class="hidden">
+  <div class="kk-hdr">
+    <h1>📚 Karteikarten</h1>
+    <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+  </div>
+  <div class="kk-body">
+    <div class="kk-status" id="kk-status"></div>
+    <section class="kk-mode-switch">
+      <button type="button" class="kk-mode-btn active" id="kk-normalModeBtn" onclick="kk_switchMode('normal')">Normal</button>
+      <button type="button" class="kk-mode-btn" id="kk-studyModeBtn" onclick="kk_switchMode('study')">Lernmodus</button>
+      <button type="button" class="kk-restart-btn" id="kk-restartStudyBtn" hidden onclick="kk_restartStudy()">Lernrunde neu starten</button>
+    </section>
+    <p class="kk-study-stats" id="kk-studyStats" hidden></p>
+    <div class="kk-card-wrap">
+      <article class="kk-card" id="kk-card" aria-live="polite" onclick="kk_toggleFlip()">
+        <section class="kk-card-face">
+          <span class="kk-face-label">Frage</span>
+          <span class="kk-category" id="kk-categoryFront"></span>
+          <div class="kk-card-text" id="kk-question"></div>
+        </section>
+        <section class="kk-card-face kk-card-back">
+          <span class="kk-face-label">Antwort</span>
+          <span class="kk-category" id="kk-categoryBack"></span>
+          <div class="kk-card-text" id="kk-answer"></div>
+          <button type="button" class="kk-theory-btn" id="kk-theoryBtn" hidden
+            onclick="event.stopPropagation(); kk_showTheory()">📖 Theorie</button>
+        </section>
+      </article>
+    </div>
+    <section class="kk-controls">
+      <button type="button" class="kk-btn" id="kk-prevBtn" onclick="kk_prevCard()">Zurück</button>
+      <button type="button" class="kk-btn primary" id="kk-flipBtn" onclick="kk_toggleFlip()">Umdrehen</button>
+      <button type="button" class="kk-btn" id="kk-nextBtn" onclick="kk_nextCard()">Weiter</button>
+      <button type="button" class="kk-btn" id="kk-shuffleBtn" onclick="kk_shuffleCards()">Mischen</button>
+      <button type="button" class="kk-btn danger" id="kk-againBtn" hidden onclick="kk_markAsAgain()">Nicht gewusst</button>
+      <button type="button" class="kk-btn success" id="kk-knownBtn" hidden onclick="kk_markAsKnown()">Gewusst</button>
+    </section>
+  </div>
+</div>
+
+<!-- LÜCKENTEXT -->
+<div id="screen-luecken" class="hidden">
+  <div class="lt-hdr">
+    <h1>✏️ Lückentext</h1>
+    <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+  </div>
+  <div class="lt-body">
+    <div class="lt-toolbar">
+      <div class="lt-left">
+        <label for="lt-categorySelect">Kategorie:</label>
+        <select id="lt-categorySelect"></select>
+      </div>
+      <div class="lt-right">
+        <span id="lt-indexLabel">Karte 0 von 0</span>
+        <span id="lt-blankLabel">Lücken: 0</span>
+      </div>
+    </div>
+    <div class="lt-card">
+      <div class="lt-meta-row">
+        <span id="lt-categoryPill" class="lt-pill">-</span>
+        <span id="lt-idLabel" class="lt-meta-id"></span>
+      </div>
+      <h2 id="lt-questionText" class="lt-question"></h2>
+      <div id="lt-clozeText" class="lt-cloze"></div>
+      <div class="lt-actions">
+        <button id="lt-checkBtn" class="lt-btn-primary">Prüfen</button>
+        <button id="lt-showBtn" class="lt-btn-secondary">Lösungen</button>
+        <button id="lt-resetBtn" class="lt-btn">Zurücksetzen</button>
+        <button id="lt-prevBtn" class="lt-btn">Vorherige</button>
+        <button id="lt-nextBtn" class="lt-btn">Nächste</button>
+        <button id="lt-shuffleBtn" class="lt-btn">Mischen</button>
+        <button id="lt-theoryBtn" class="kk-theory-btn" hidden>📖 Theorie</button>
+      </div>
+      <p id="lt-feedback" class="lt-feedback"></p>
+    </div>
+  </div>
+</div>
+
+<!-- THEORIE-ÜBERSICHT -->
+<div id="screen-theory-list" class="hidden">
+  <div class="tl-hdr">
+    <h1>📖 Theorie</h1>
+    <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+  </div>
+  <div class="tl-body">
+    <div id="tl-list" class="tl-list"></div>
+  </div>
+</div>
+
+<!-- THEORIE -->
+<div id="screen-theory" class="hidden">
+  <div class="theory-hdr">
+    <button class="back-btn" id="theory-back">← Zurück</button>
+    <span class="theory-hdr-title" id="theory-title"></span>
+  </div>
+  <div class="theory-body">
+    <div id="theory-content" class="theory-content"></div>
+  </div>
+</div>
+
+</div><!-- #app -->
+<script src="cards.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
