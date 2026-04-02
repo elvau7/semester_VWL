@@ -1040,6 +1040,286 @@ lt: [
     <p>The Hicksian demand for $y$ is $\\bar{u}/4$, independent of prices — the substitution effect for $y$ is zero. This corresponds to preferences where $y$ always enters in fixed proportion (like a perfect complement with $x$).</p>
   `},
 
+  /* ================================================================
+     IDs 78–84: Problem Sets 1 & 2 — Schritt-für-Schritt Lösungen
+     ================================================================ */
+
+  {id: 78, title: "PS1 – 1.1: Indifferenzkurven & MRS für 5 Nutzenfunktionen", html: `
+    <h2>Problem Set 1 – Aufgabe 1.1</h2>
+    <p>Für jede Nutzenfunktion: Indifferenzkurven skizzieren und prüfen, ob $MRS_{x,y}$ mit steigendem $x$ fällt (⟹ konvexe ICs).</p>
+    <p><strong>Formel:</strong> $MRS_{x,y} = -\\frac{dy}{dx}\\Big|_{u=\\text{const}} = \\frac{MU_x}{MU_y}$</p>
+
+    <hr>
+    <h3>(a) $u(x,y) = 3x + y$ — Perfekte Substitute</h3>
+    <p>$MU_x = 3,\\ MU_y = 1$</p>
+    <p>$$MRS_{x,y} = \\frac{3}{1} = 3 \\quad (\\text{konstant, unabhängig von } x)$$</p>
+    <p>Die Indifferenzkurven sind <strong>Geraden</strong> mit Steigung $-3$. Die MRS ist konstant → <strong>nicht strikt konvex</strong> (linear).</p>
+
+    <hr>
+    <h3>(b) $u(x,y) = \\sqrt{xy}$ — Cobb-Douglas</h3>
+    <p>$MU_x = \\frac{\\sqrt{y}}{2\\sqrt{x}},\\ MU_y = \\frac{\\sqrt{x}}{2\\sqrt{y}}$</p>
+    <p>$$MRS_{x,y} = \\frac{MU_x}{MU_y} = \\frac{y}{x}$$</p>
+    <p>Entlang einer IC mit $u = k$: $xy = k^2$, also $y = k^2/x$. Dann $MRS = k^2/x^2$, fällt mit steigendem $x$ → <strong>konvex ✓</strong>.</p>
+
+    <hr>
+    <h3>(c) $u(x,y) = \\sqrt{x} + y$ — Quasi-linear</h3>
+    <p>$MU_x = \\frac{1}{2\\sqrt{x}},\\ MU_y = 1$</p>
+    <p>$$MRS_{x,y} = \\frac{1}{2\\sqrt{x}}$$</p>
+    <p>Fällt mit steigendem $x$ (da $1/\\sqrt{x}$ abnimmt) → <strong>konvex ✓</strong>. Die ICs sind vertikale Translationen voneinander (Merkmal quasi-linearer Funktionen).</p>
+
+    <hr>
+    <h3>(d) $u(x,y) = \\sqrt{x^2 - y^2}$ — $y$ ist ein „Bad"</h3>
+    <p>$MU_x = \\frac{x}{\\sqrt{x^2-y^2}} > 0,\\ MU_y = \\frac{-y}{\\sqrt{x^2-y^2}} < 0$</p>
+    <p>$$\\frac{dy}{dx}\\Big|_{u=\\text{const}} = -\\frac{MU_x}{MU_y} = -\\frac{x/u}{-y/u} = \\frac{x}{y} > 0$$</p>
+    <p>Die Indifferenzkurven haben eine <strong>positive Steigung</strong> — $y$ ist ein schlechtes Gut (mehr $y$ senkt den Nutzen). Auf einer IC gilt $x^2 - y^2 = k^2$, d.h. $x/y$ wächst mit $x$ → MRS wächst → <strong>nicht konvex ✗</strong>.</p>
+
+    <hr>
+    <h3>(e) $u(x,y) = \\frac{xy}{x+y}$ — Harmonisches Mittel</h3>
+    <p>$MU_x = \\frac{y^2}{(x+y)^2},\\ MU_y = \\frac{x^2}{(x+y)^2}$</p>
+    <p>$$MRS_{x,y} = \\frac{y^2}{x^2} = \\left(\\frac{y}{x}\\right)^2$$</p>
+    <p>Entlang einer IC fällt $y/x$ mit steigendem $x$ → $(y/x)^2$ fällt → <strong>konvex ✓</strong>.</p>
+
+    <hr>
+    <h3>Zusammenfassung</h3>
+    <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+      <tr style="border-bottom:1px solid var(--border);"><th style="padding:6px;">Funktion</th><th style="padding:6px;">$MRS_{x,y}$</th><th style="padding:6px;">Konvex?</th></tr>
+      <tr><td style="padding:4px 8px;">$3x+y$</td><td style="padding:4px 8px;">$3$ (konstant)</td><td style="padding:4px 8px;">✗ (linear)</td></tr>
+      <tr><td style="padding:4px 8px;">$\\sqrt{xy}$</td><td style="padding:4px 8px;">$y/x$</td><td style="padding:4px 8px;">✓</td></tr>
+      <tr><td style="padding:4px 8px;">$\\sqrt{x}+y$</td><td style="padding:4px 8px;">$1/(2\\sqrt{x})$</td><td style="padding:4px 8px;">✓</td></tr>
+      <tr><td style="padding:4px 8px;">$\\sqrt{x^2-y^2}$</td><td style="padding:4px 8px;">$x/y$ (steigend)</td><td style="padding:4px 8px;">✗ ($y$ ist Bad)</td></tr>
+      <tr><td style="padding:4px 8px;">$xy/(x+y)$</td><td style="padding:4px 8px;">$(y/x)^2$</td><td style="padding:4px 8px;">✓</td></tr>
+    </table>
+  `},
+
+  {id: 79, title: "PS1 – 1.2: Cobb-Douglas MRS, Normierung & Homothetizität", html: `
+    <h2>Problem Set 1 – Aufgabe 1.2</h2>
+    <p>Nutzenfunktion: $u(x,y) = x^\\alpha y^\\beta$</p>
+
+    <h3>Herleitung der MRS</h3>
+    <p>$$MU_x = \\alpha x^{\\alpha-1} y^\\beta, \\quad MU_y = \\beta x^\\alpha y^{\\beta-1}$$</p>
+    <p>$$MRS_{x,y} = \\frac{MU_x}{MU_y} = \\frac{\\alpha x^{\\alpha-1} y^\\beta}{\\beta x^\\alpha y^{\\beta-1}} = \\frac{\\alpha}{\\beta} \\cdot \\frac{y}{x}$$</p>
+
+    <hr>
+    <h3>(a) Hängt die MRS von $\\alpha + \\beta = 1$ ab?</h3>
+    <p><strong>Nein.</strong> Die Formel $MRS = (\\alpha/\\beta)(y/x)$ gilt unabhängig von der Normierung. Die Bedingung $\\alpha+\\beta=1$ ist lediglich eine <em>ordinale Normierung</em> für die Nutzenfunktion (man erhöht $u^{1/(\\alpha+\\beta)}$, was eine ordnungserhaltende Transformation ist). Sie vereinfacht Rechnungen, ändert aber die Präferenzen nicht.</p>
+
+    <hr>
+    <h3>(b) Fall $y = x$</h3>
+    <p>Wenn $y = x$: $MRS = \\frac{\\alpha}{\\beta} \\cdot 1 = \\frac{\\alpha}{\\beta}$</p>
+    <p><strong>Intuition für $\\alpha > \\beta$:</strong> Der Konsument gewichtet Gut $x$ stärker. An der Diagonalen (gleiche Mengen) ist der Grenznutzen von $x$ relativ hoch → er ist bereit, mehr als eine Einheit $y$ aufzugeben, um eine Einheit $x$ zu erhalten → $MRS > 1$.</p>
+    <p><em>Grafisch:</em> Die IC-Kurve schneidet die Diagonale $y=x$ mit einer Steigung $-\\alpha/\\beta$. Je größer $\\alpha$ relativ zu $\\beta$, desto steiler die IC an diesem Punkt.</p>
+
+    <hr>
+    <h3>(c) Subsistenzniveaus: $u(x,y) = (x-x_0)^\\alpha(y-y_0)^\\beta$ — Homothethisch?</h3>
+    <p>Eine Funktion ist homothetisch, wenn die MRS nur vom Verhältnis $y/x$ abhängt (äquivalent: sie ist eine monotone Transformation einer homogenen Funktion).</p>
+    <p>$$MRS = \\frac{\\alpha(x-x_0)^{\\alpha-1}(y-y_0)^\\beta}{\\beta(x-x_0)^\\alpha(y-y_0)^{\\beta-1}} = \\frac{\\alpha}{\\beta}\\cdot\\frac{y-y_0}{x-x_0}$$</p>
+    <p>Die MRS hängt von $(y-y_0)/(x-x_0)$ ab, <em>nicht</em> von $y/x$. Bei einer proportionalen Skalierung $(tx, ty)$:</p>
+    <p>$$MRS(tx,ty) = \\frac{\\alpha}{\\beta}\\cdot\\frac{ty - y_0}{tx - x_0} \\neq \\frac{\\alpha}{\\beta}\\cdot\\frac{y-y_0}{x-x_0}$$</p>
+    <p><strong>→ Die Funktion ist nicht homothetisch</strong> (außer wenn $x_0 = y_0 = 0$). Strahlen aus dem Ursprung haben keine konstante Steigung der Indifferenzkurven.</p>
+  `},
+
+  {id: 80, title: "PS1 – 1.3: CES-Nutzenfunktion: Homothetizität, MRS & Krümmung", html: `
+    <h2>Problem Set 1 – Aufgabe 1.3</h2>
+    <p>CES-Nutzenfunktion: $u(x,y) = \\alpha\\,\\frac{x^\\delta}{\\delta} + \\beta\\,\\frac{y^\\delta}{\\delta}$</p>
+
+    <hr>
+    <h3>(a) Homothetizität und MRS</h3>
+    <p>$$MU_x = \\alpha x^{\\delta-1}, \\quad MU_y = \\beta y^{\\delta-1}$$</p>
+    <p>$$MRS_{x,y} = \\frac{\\alpha x^{\\delta-1}}{\\beta y^{\\delta-1}} = \\frac{\\alpha}{\\beta}\\left(\\frac{x}{y}\\right)^{\\delta-1} = \\frac{\\alpha}{\\beta}\\left(\\frac{y}{x}\\right)^{1-\\delta}$$</p>
+    <p>Die MRS hängt <strong>nur vom Verhältnis $y/x$</strong> ab → <strong>homothetisch ✓</strong></p>
+    <p>Formaler Beweis: $f(tx,ty) = \\alpha(tx)^\\delta/\\delta + \\beta(ty)^\\delta/\\delta = t^\\delta f(x,y)$ → $f$ ist homogen vom Grad $\\delta$, also ist $u$ eine monotone Transformation einer homogenen Funktion.</p>
+
+    <hr>
+    <h3>(b) Spezialfälle: $\\delta=1$ und $\\delta \\to 0$</h3>
+    <p><strong>$\\delta = 1$ (Perfekte Substitute):</strong></p>
+    <p>$u = \\alpha x + \\beta y$, $MRS = \\alpha/\\beta$ (konstant) ✓</p>
+    <p><strong>$\\delta \\to 0$ (Cobb-Douglas-Grenzfall):</strong></p>
+    <p>$MRS = (\\alpha/\\beta)(y/x)^{1-0} = (\\alpha/\\beta)(y/x)$ ✓ — stimmt mit der Cobb-Douglas-MRS aus Aufgabe 1.2 überein.</p>
+
+    <hr>
+    <h3>(c) Strikt fallende MRS für $\\delta < 1$</h3>
+    <p>Wir differenzieren $MRS = (\\alpha/\\beta)(y/x)^{1-\\delta}$ nach $x$ entlang einer Indifferenzkurve.</p>
+    <p>Entlang einer IC gilt $dy/dx < 0$ (bei normalen Gütern), also fällt $y/x$ wenn $x$ steigt. Da $1-\\delta > 0$ für $\\delta < 1$, fällt $(y/x)^{1-\\delta}$ ebenfalls → <strong>strikt fallende MRS ✓</strong></p>
+
+    <hr>
+    <h3>(d) Numerisches Beispiel (mit $\\alpha=\\beta=1$)</h3>
+    <p>$MRS = (y/x)^{1-\\delta}$</p>
+    <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+      <tr style="border-bottom:1px solid var(--border);"><th style="padding:6px;">$\\delta$</th><th style="padding:6px;">$1-\\delta$</th><th style="padding:6px;">$MRS$ bei $y/x=0.9$</th><th style="padding:6px;">$MRS$ bei $y/x=1.1$</th><th style="padding:6px;">Änderung</th></tr>
+      <tr><td style="padding:4px 8px;">$0.5$</td><td style="padding:4px 8px;">$0.5$</td><td style="padding:4px 8px;">$0.9^{0.5}\\approx 0.949$</td><td style="padding:4px 8px;">$1.1^{0.5}\\approx 1.049$</td><td style="padding:4px 8px;">$\\approx 0.100$</td></tr>
+      <tr><td style="padding:4px 8px;">$-1$</td><td style="padding:4px 8px;">$2$</td><td style="padding:4px 8px;">$0.9^2 = 0.81$</td><td style="padding:4px 8px;">$1.1^2 = 1.21$</td><td style="padding:4px 8px;">$= 0.40$</td></tr>
+    </table>
+    <p><strong>Interpretation:</strong> Für $\\delta = -1$ ändert sich die MRS viermal stärker. Das entspricht stärker gekrümmten Indifferenzkurven → die Güter sind <em>komplementärer</em> zueinander, der Konsument ist weniger bereit zu substituieren.</p>
+    <p>Grafisch: Bei $\\delta=-1$ liegen die ICs näher an der L-Form der Leontief-Präferenzen; bei $\\delta=0.5$ sind sie flacher und der perfekten-Substitute-Gerade ähnlicher.</p>
+  `},
+
+  {id: 81, title: "PS1 – 1.4: Quasi-lineare Nutzenfunktion $u = x + \\ln y$", html: `
+    <h2>Problem Set 1 – Aufgabe 1.4</h2>
+    <p>Nutzenfunktion: $u(x,y) = x + \\ln y$</p>
+
+    <hr>
+    <h3>(a) MRS berechnen und interpretieren</h3>
+    <p>$$MU_x = 1, \\quad MU_y = \\frac{1}{y}$$</p>
+    <p>$$MRS_{x,y} = \\frac{MU_x}{MU_y} = \\frac{1}{1/y} = y$$</p>
+    <p><strong>Interpretation:</strong> Der Konsument ist bereit, $y$ Einheiten von $x$ aufzugeben, um eine weitere Einheit $y$ zu erhalten. Die MRS hängt <em>nicht von $x$</em> ab — nur von der Menge an $y$. Das ist das Markenzeichen <strong>quasi-linearer</strong> Nutzenfunktionen: Die Indifferenzkurven sind vertikale Translationen.</p>
+
+    <hr>
+    <h3>(b) Quasi-Konkavität nachweisen</h3>
+    <p>Für $u(x,y) = x + f(y)$ ist Quasi-Konkavität äquivalent zu $f''(y) \\leq 0$.</p>
+    <p>Hier $f(y) = \\ln y$: $f'(y) = 1/y > 0$, $f''(y) = -1/y^2 < 0$ ✓</p>
+    <p>Alternativ über den <em>Bordered Hessian</em>:</p>
+    <p>$u_{xx}=0,\\ u_{yy}=-1/y^2,\\ u_{xy}=0$</p>
+    <p>$$|\\bar{H}| = -u_x^2 u_{yy} + 2u_x u_y u_{xy} - u_y^2 u_{xx} = -(1)^2(-1/y^2) + 0 - 0 = \\frac{1}{y^2} > 0 \\quad ✓$$</p>
+
+    <hr>
+    <h3>(c) Gleichung der Indifferenzkurve</h3>
+    <p>Setze $u(x,y) = k$ (Konstante):</p>
+    <p>$$x + \\ln y = k \\implies x = k - \\ln y$$</p>
+    <p>Form: Eine nach links verschobene Logarithmuskurve in der $(x,y)$-Ebene. Für höhere $k$ verschiebt sich die Kurve <em>parallel nach oben</em> (rein horizontale Verschiebung um $k$).</p>
+
+    <hr>
+    <h3>(d) Vergleich der Grenznutzen</h3>
+    <p>$MU_x = 1$ (konstant) — jede zusätzliche Einheit $x$ bringt immer den gleichen Nutzenzuwachs.</p>
+    <p>$MU_y = 1/y$ (fallend) — je mehr $y$ vorhanden, desto geringer der Grenznutzen von $y$.</p>
+    <p><strong>Konsequenz für das Konsumverhalten:</strong> Im Optimum gilt $MRS = MU_x/MU_y = y = p_x/p_y$. Also:</p>
+    <p>$$y^* = \\frac{p_x}{p_y} \\quad (\\text{konstant, unabhängig vom Einkommen } I!)$$</p>
+    <p>Das gesamte zusätzliche Einkommen fließt in Gut $x$. $x$ fungiert als <strong>numeraire-Gut ohne Einkommenseffekt</strong>.</p>
+
+    <hr>
+    <h3>(e) Anwendungsfälle</h3>
+    <ul>
+      <li><strong>Umweltökonomik:</strong> $y$ = Umweltqualität (Zahlungsbereitschaft unabhängig vom Einkommen)</li>
+      <li><strong>Öffentliche Güter:</strong> Wenn Einkommenseffekte für das öffentliche Gut vernachlässigbar sind</li>
+      <li><strong>Partialgleichgewicht:</strong> $x$ = Numeraire-Gut (Geld), $y$ = analysiertes Gut</li>
+      <li><strong>Modellvereinfachung:</strong> Kein Einkommenseffekt → die Marshallsche Nachfragekurve entspricht der Hicksschen</li>
+    </ul>
+  `},
+
+  {id: 82, title: "PS2 – 2.1: Lineare Nutzenfunktion — Expenditure Function", html: `
+    <h2>Problem Set 2 – Aufgabe 2.1</h2>
+    <p>Nutzenfunktion: $u(x,y) = ax + by$</p>
+    <p>Gesucht: Die Expenditure Function $E(p_x, p_y, V)$ — minimale Ausgaben, um Nutzenniveau $V$ zu erreichen.</p>
+
+    <hr>
+    <h3>Idee: Perfekte Substitute — Eckenlösung</h3>
+    <p>Der Konsument kauft ausschließlich das Gut, das pro Nutzeneinheit günstiger ist.</p>
+    <ul>
+      <li>Gut $x$ kostet pro Nutzeneinheit: $p_x/a$</li>
+      <li>Gut $y$ kostet pro Nutzeneinheit: $p_y/b$</li>
+    </ul>
+
+    <hr>
+    <h3>Fall 1: $p_x/a < p_y/b$ (Gut $x$ günstiger pro Util)</h3>
+    <p>Konsument kauft nur $x$: $ax^* = V \\implies x^* = V/a$</p>
+    <p>$$E = p_x \\cdot \\frac{V}{a} = V \\cdot \\frac{p_x}{a}$$</p>
+
+    <hr>
+    <h3>Fall 2: $p_x/a > p_y/b$ (Gut $y$ günstiger pro Util)</h3>
+    <p>Konsument kauft nur $y$: $by^* = V \\implies y^* = V/b$</p>
+    <p>$$E = p_y \\cdot \\frac{V}{b} = V \\cdot \\frac{p_y}{b}$$</p>
+
+    <hr>
+    <h3>Fall 3: $p_x/a = p_y/b$ (Preisratio = MRS)</h3>
+    <p>Jede Kombination mit $ax+by=V$ ist optimal — alle haben dieselben Kosten.</p>
+
+    <hr>
+    <h3>Ergebnis: Expenditure Function mit Knick</h3>
+    <p>$$\boxed{E(p_x, p_y, V) = V \\cdot \\min\\!\\left(\\frac{p_x}{a},\\, \\frac{p_y}{b}\\right)}$$</p>
+    <p>Der <strong>Knick</strong> tritt bei $p_x/p_y = a/b$ auf — dort wechselt der Konsument von ausschließlich $x$ zu ausschließlich $y$.</p>
+
+    <h3>Grafische Intuition</h3>
+    <p>Als Funktion von $p_x$ (bei festem $p_y$): $E = V\\cdot p_x/a$ für kleine $p_x$, dann konstant bei $V\\cdot p_y/b$ sobald $p_x/a > p_y/b$ → flacher Abschnitt. Das ergibt die für Expenditure Functions typische konkave (hier stückweise lineare) Form.</p>
+  `},
+
+  {id: 83, title: "PS2 – 2.2: Stone-Geary — Subsistenz & Ausgabenanteile", html: `
+    <h2>Problem Set 2 – Aufgabe 2.2: Stone-Geary Nutzenfunktion</h2>
+    <p>$u(x,y) = (x - x_0)^\\alpha \\cdot y^\\beta,\\quad \\alpha + \\beta = 1, \\quad I > p_x x_0$</p>
+    <p>$x_0$ ist das <strong>Subsistenzminimum</strong> — die Menge Nahrung, die zum Überleben benötigt wird.</p>
+
+    <hr>
+    <h3>Teil (a): Nutzenmaximierung</h3>
+    <p><strong>Schlüsselbeobachtung:</strong> Definiere $\\tilde{x} = x - x_0$ (Überschuss über Subsistenz) und $\\tilde{I} = I - p_x x_0$ (supernumeräres Einkommen).</p>
+    <p>Das Budget wird:</p>
+    <p>$$p_x x + p_y y = I \\implies p_x(\\tilde{x}+x_0) + p_y y = I \\implies p_x \\tilde{x} + p_y y = I - p_x x_0 = \\tilde{I}$$</p>
+    <p>Das Problem ist jetzt eine <strong>Standard-Cobb-Douglas-Maximierung</strong> von $(\\tilde{x})^\\alpha y^\\beta$ unter $p_x \\tilde{x} + p_y y = \\tilde{I}$.</p>
+    <p>Aus der Cobb-Douglas-Lösung folgt direkt:</p>
+    <p>$$p_x \\tilde{x}^* = \\alpha \\tilde{I} = \\alpha(I - p_x x_0)$$</p>
+    <p>$$p_y y^* = \\beta \\tilde{I} = \\beta(I - p_x x_0)$$</p>
+    <p>Rücksubstitution für $x^* = \\tilde{x}^* + x_0$:</p>
+    <p>$$\\boxed{p_x x^* = p_x x_0 + \\alpha(I - p_x x_0)}$$</p>
+    <p>$$\\boxed{p_y y^* = \\beta(I - p_x x_0)}$$</p>
+
+    <p><strong>Interpretation:</strong> Vom Einkommen $I$ werden zunächst die Ausgaben für das Subsistenzminimum $p_x x_0$ „abgezogen". Das verbleibende <em>supernumeräre Einkommen</em> $\\tilde{I}$ wird im Verhältnis $\\alpha:\\beta$ auf $x$ und $y$ aufgeteilt — genau wie bei einer Standard-Cobb-Douglas-Funktion.</p>
+
+    <hr>
+    <h3>Teil (b): Ausgabenanteile und Engelkurven</h3>
+    <p>Ausgabenanteil für $x$:</p>
+    <p>$$\\frac{p_x x^*}{I} = \\frac{p_x x_0 + \\alpha(I - p_x x_0)}{I} = \\alpha + \\frac{(1-\\alpha)p_x x_0}{I}$$</p>
+    <p>Ausgabenanteil für $y$:</p>
+    <p>$$\\frac{p_y y^*}{I} = \\frac{\\beta(I-p_x x_0)}{I} = \\beta - \\frac{\\beta p_x x_0}{I}$$</p>
+    <p>Wenn $I$ steigt ($x_0, p_x$ fest):</p>
+    <ul>
+      <li>Anteil für $x$ fällt (von oben gegen $\\alpha$) — $x$ ist ein <strong>notwendiges Gut</strong> (Engel-Gesetz)</li>
+      <li>Anteil für $y$ steigt (von unten gegen $\\beta$) — $y$ ist ein <strong>normales Gut</strong></li>
+    </ul>
+    <p>Bei sehr hohem Einkommen nähern sich die Anteile den Cobb-Douglas-Werten $\\alpha$ und $\\beta$ an.</p>
+  `},
+
+  {id: 84, title: "PS2 – 2.3: CES Indirekte Nutzenfunktion & Expenditure Function", html: `
+    <h2>Problem Set 2 – Aufgabe 2.3: CES Dualität</h2>
+    <p>$u(x,y) = (x^\\delta + y^\\delta)^{1/\\delta},\\quad r = \\frac{\\delta}{\\delta-1}$</p>
+
+    <hr>
+    <h3>Teil (a): Indirekte Nutzenfunktion $V = I\\cdot(p_x^r + p_y^r)^{-1/r}$</h3>
+    <p><strong>Schritt 1 — Marshallsche Nachfragen (aus FOC):</strong></p>
+    <p>Lagrange-Bedingungen: $\\lambda p_x = x^{\\delta-1}(x^\\delta+y^\\delta)^{1/\\delta-1}$ und analog für $y$.</p>
+    <p>Verhältnis: $\\frac{p_x}{p_y} = \\left(\\frac{x}{y}\\right)^{\\delta-1} \\implies y = x\\left(\\frac{p_x}{p_y}\\right)^{1/(\\delta-1)}$</p>
+    <p>Mit $1/(\\delta-1) = r/\\delta - 1$... nach Einsetzen ins Budget erhält man:</p>
+    <p>$$x^* = \\frac{I \\cdot p_x^{r-1}}{p_x^r + p_y^r}, \\quad y^* = \\frac{I \\cdot p_y^{r-1}}{p_x^r + p_y^r}$$</p>
+    <p><strong>Schritt 2 — In Nutzenfunktion einsetzen:</strong></p>
+    <p>Sei $D = p_x^r + p_y^r$. Dann $(x^*)^\\delta = I^\\delta p_x^{\\delta(r-1)}/D^\\delta$.</p>
+    <p>Schlüsselidentität: $\\delta(r-1) = \\delta \\cdot \\frac{1}{\\delta-1} = \\frac{\\delta}{\\delta-1} = r$ ✓</p>
+    <p>$$(x^*)^\\delta + (y^*)^\\delta = \\frac{I^\\delta(p_x^r+p_y^r)}{D^\\delta} = \\frac{I^\\delta}{D^{\\delta-1}}$$</p>
+    <p>$$V = \\left(\\frac{I^\\delta}{D^{\\delta-1}}\\right)^{1/\\delta} = I \\cdot D^{-(\\delta-1)/\\delta} = I \\cdot D^{-1/r}$$</p>
+    <p>$$\\boxed{V(p_x, p_y, I) = I\\cdot(p_x^r + p_y^r)^{-1/r}}$$</p>
+
+    <hr>
+    <h3>Teil (b): Homogenität Grad 0 in $(p_x, p_y, I)$</h3>
+    <p>$$V(tp_x, tp_y, tI) = tI \\cdot \\left((tp_x)^r+(tp_y)^r\\right)^{-1/r} = tI \\cdot t^{-1}(p_x^r+p_y^r)^{-1/r} = V \\quad ✓$$</p>
+    <p>Verdopplung aller Preise und Einkommen ändert den Nutzen nicht (kein Geldillusion).</p>
+
+    <hr>
+    <h3>Teil (c): Strikt steigend in $I$</h3>
+    <p>$$\\frac{\\partial V}{\\partial I} = (p_x^r+p_y^r)^{-1/r} > 0 \\quad ✓$$</p>
+
+    <hr>
+    <h3>Teil (d): Strikt fallend in $p_x$</h3>
+    <p>$$\\frac{\\partial V}{\\partial p_x} = I\\cdot\\left(-\\frac{1}{r}\\right)(p_x^r+p_y^r)^{-1/r-1}\\cdot r\\cdot p_x^{r-1} = -I\\cdot p_x^{r-1}(p_x^r+p_y^r)^{-1/r-1} < 0 \\quad ✓$$</p>
+    <p>(Alle Faktoren positiv für $I, p_x > 0$, daher negatives Vorzeichen.)</p>
+
+    <hr>
+    <h3>Teil (e): Expenditure Function $E = V\\cdot(p_x^r+p_y^r)^{1/r}$</h3>
+    <p>Aus der Dualität: $V = I\\cdot D^{-1/r}$ nach $I$ auflösen (setze $I = E$):</p>
+    <p>$$E(p_x,p_y,V) = V\\cdot(p_x^r+p_y^r)^{1/r}$$</p>
+
+    <hr>
+    <h3>Teil (f): Homogenität Grad 1 in Preisen</h3>
+    <p>$$E(tp_x, tp_y, V) = V\\cdot\\left((tp_x)^r+(tp_y)^r\\right)^{1/r} = V\\cdot t\\cdot(p_x^r+p_y^r)^{1/r} = t\\cdot E \\quad ✓$$</p>
+    <p>Eine Verdopplung aller Preise verdoppelt die Mindestausgaben (keine Substitution möglich ohne Nutzenverlust).</p>
+
+    <hr>
+    <h3>Teil (g): Steigend in Preisen</h3>
+    <p>$$\\frac{\\partial E}{\\partial p_x} = V\\cdot p_x^{r-1}(p_x^r+p_y^r)^{1/r-1} > 0 \\quad ✓$$</p>
+
+    <hr>
+    <h3>Teil (h): Konkav in Preisen</h3>
+    <p>$$\\frac{\\partial^2 E}{\\partial p_x^2} = V\\cdot p_x^{r-2}(p_x^r+p_y^r)^{1/r-2}\\cdot(r-1)\\cdot p_y^r$$</p>
+    <p>Alle Faktoren außer $(r-1)$ sind positiv. Für Konkavität brauchen wir $r - 1 \\leq 0$, d.h. $r \\leq 1$.</p>
+    <p>Beweis: $r = \\delta/(\\delta-1) \\leq 1 \\iff \\delta/(\\delta-1) - 1 = 1/(\\delta-1) \\leq 0 \\iff \\delta - 1 < 0 \\iff \\delta < 1$ ✓</p>
+    <p>Da CES-Nutzenfunktionen standardmäßig $\\delta < 1$ erfordern (damit $\\sigma > 0$), gilt $\\partial^2 E/\\partial p_x^2 \\leq 0$ ✓</p>
+    <p><strong>Ökonomische Intuition:</strong> Steigt $p_x$, kann der Konsument zu $y$ substituieren → die Kostensteigerung ist schwächer als proportional → konkave Expenditure Function.</p>
+  `},
+
     ],
 
   mc: [
