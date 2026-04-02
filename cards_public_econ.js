@@ -686,6 +686,114 @@ SUBJECTS.push(
     <p>The Tiebout hypothesis argues that with many communities and consumers, these small-number problems vanish and efficiency is restored.</p>
   `},
 
+  {id: 16, title: "Gini & Atkinson: Schritt-für-Schritt Berechnung", html: `
+    <h2>Gini & Atkinson: Numerische Berechnung</h2>
+    <p>Dieses Dokument erklärt beide Indexe vollständig an konkreten Zahlenbeispielen — so wie es in der Midterm-Prüfung verlangt wird.</p>
+
+    <hr>
+
+    <h2>Teil 1: Der Gini-Index</h2>
+
+    <h3>Die zwei äquivalenten Formeln</h3>
+    <p><strong>Formel 1 — Minimumsumme (Standard):</strong></p>
+    <p>$$G = 1 - \\frac{1}{H^2 \\mu} \\sum_{i=1}^{H} \\sum_{j=1}^{H} \\min\\{M^i, M^j\\}$$</p>
+    <p>Dabei ist $\\mu$ das Durchschnittseinkommen und $(M^i, M^j)$ ein <em>geordnetes</em> Paar — d.h. $(M^i, M^j) \\neq (M^j, M^i)$, also alle $H^2$ Kombinationen zählen.</p>
+
+    <p><strong>Formel 2 — Zählmethode (einfacher zu rechnen):</strong></p>
+    <p>$$G = 1 - \\frac{1}{H^2 \\mu} \\sum_{i=1}^{H} 2\\!\\left(H - i + \\tfrac{1}{2}\\right) M^i$$</p>
+    <p>Das ergibt für $H$ Einkommen die Koeffizienten $(2H-1),\\, (2H-3),\\, \\ldots,\\, 3,\\, 1$ für $M^1 \\leq M^2 \\leq \\ldots \\leq M^H$.</p>
+
+    <h3>Warum haben die Koeffizienten diese Form?</h3>
+    <p>$M^i$ ist das Minimum in folgenden Paaren:</p>
+    <ul>
+      <li>allen $(M^i, M^j)$ mit $j \\geq i$ — das sind $H - i + 1$ Paare</li>
+      <li>allen $(M^j, M^i)$ mit $j > i$ — das sind $H - i$ Paare</li>
+      <li>dem Paar $(M^i, M^i)$ — einmal gezählt</li>
+    </ul>
+    <p>Insgesamt wird $M^i$ also $2(H - i + \\tfrac{1}{2})$-mal gezählt.</p>
+    <p><em>Beispiel H = 4, i = 3:</em> Koeffizient $= 2(4 - 3 + \\tfrac{1}{2}) = 2 \\cdot 1{,}5 = 3$. Für $M^4$ (das höchste): $2(4-4+\\tfrac{1}{2}) = 1$. ✓</p>
+
+    <hr>
+
+    <h3>Gerechnetes Beispiel a): Einkommen {3, 5, 10}</h3>
+    <p><strong>Schritt 1:</strong> Einkommen aufsteigend ordnen: $M^1 = 3,\\; M^2 = 5,\\; M^3 = 10$</p>
+    <p><strong>Schritt 2:</strong> Mittelwert berechnen: $\\mu = \\dfrac{3 + 5 + 10}{3} = 6$</p>
+    <p><strong>Schritt 3:</strong> Koeffizienten für $H = 3$ bestimmen:</p>
+    <ul>
+      <li>$i=1$: $2(3 - 1 + \\tfrac{1}{2}) = 2 \\cdot 2{,}5 = 5$</li>
+      <li>$i=2$: $2(3 - 2 + \\tfrac{1}{2}) = 2 \\cdot 1{,}5 = 3$</li>
+      <li>$i=3$: $2(3 - 3 + \\tfrac{1}{2}) = 2 \\cdot 0{,}5 = 1$</li>
+    </ul>
+    <p><strong>Schritt 4:</strong> Gewichtete Summe berechnen:</p>
+    <p>$$(5 \\times 3) + (3 \\times 5) + (1 \\times 10) = 15 + 15 + 10 = 40$$</p>
+    <p><strong>Schritt 5:</strong> Gini berechnen:</p>
+    <p>$$G = 1 - \\frac{40}{3^2 \\times 6} = 1 - \\frac{40}{54} \\approx 0{,}26$$</p>
+
+    <hr>
+
+    <h3>Gerechnetes Beispiel b): Transfer → Einkommen {3, 6, 9}</h3>
+    <p>1 Einheit wird von Haushalt 3 auf Haushalt 2 übertragen: $10 \\to 9$, $5 \\to 6$. Der Mittelwert bleibt $\\mu = 6$.</p>
+    <p><strong>Koeffizienten</strong> gleich wie oben: 5, 3, 1.</p>
+    <p><strong>Gewichtete Summe:</strong></p>
+    <p>$$(5 \\times 3) + (3 \\times 6) + (1 \\times 9) = 15 + 18 + 9 = 42$$</p>
+    <p><strong>Neuer Gini:</strong></p>
+    <p>$$G' = 1 - \\frac{42}{54} \\approx 0{,}22 < 0{,}26$$</p>
+    <p>Der Gini sinkt. Das illustriert das <strong>Pigou-Dalton-Prinzip</strong>: Eine Einkommensübertragung vom Reichen zum Ärmeren (ohne Rangwechsel) reduziert die Ungleichheit.</p>
+
+    <hr>
+
+    <h2>Teil 2: Der Atkinson-Index</h2>
+
+    <h3>Überblick über die drei Schritte</h3>
+    <ol>
+      <li>Gesamtwohlfahrt $W$ berechnen</li>
+      <li>Äquivalentes Gleichverteilungseinkommen $M^{EDE}$ bestimmen</li>
+      <li>Atkinson-Index berechnen: $A = 1 - \\dfrac{M^{EDE}}{\\mu}$</li>
+    </ol>
+
+    <h3>Gerechnetes Beispiel: Einkommen {1, 3, 6, 9, 11}, $\\varepsilon = \\tfrac{1}{2}$</h3>
+
+    <p><strong>Schritt 1: Nutzenfunktion aufschreiben</strong></p>
+    <p>$$U(M) = \\frac{M^{1-\\varepsilon}}{1-\\varepsilon} = \\frac{M^{1/2}}{1/2} = 2\\sqrt{M}$$</p>
+
+    <p><strong>Schritt 2: Mittelwert berechnen</strong></p>
+    <p>$$\\mu = \\frac{1 + 3 + 6 + 9 + 11}{5} = \\frac{30}{5} = 6$$</p>
+
+    <p><strong>Schritt 3: Gesamtwohlfahrt $W$ berechnen</strong></p>
+    <p>$$W = \\sum_{h=1}^{H} U(M^h) = 2\\sqrt{1} + 2\\sqrt{3} + 2\\sqrt{6} + 2\\sqrt{9} + 2\\sqrt{11}$$</p>
+    <p>$$= 2(1{,}000) + 2(1{,}732) + 2(2{,}449) + 2(3{,}000) + 2(3{,}317)$$</p>
+    <p>$$= 2{,}000 + 3{,}464 + 4{,}899 + 6{,}000 + 6{,}633 = 22{,}99$$</p>
+
+    <p><strong>Schritt 4: $M^{EDE}$ aus der Gleichung $W = H \\cdot U(M^{EDE})$ lösen</strong></p>
+    <p>$$22{,}99 = 5 \\cdot 2\\sqrt{M^{EDE}} = 10\\sqrt{M^{EDE}}$$</p>
+    <p>$$\\sqrt{M^{EDE}} = \\frac{22{,}99}{10} = 2{,}30$$</p>
+    <p>$$M^{EDE} = (2{,}30)^2 = 5{,}29$$</p>
+    <p><em>Intuition:</em> $M^{EDE} = 5{,}29 < \\mu = 6$, weil die Nutzenfunktion konkav ist — eine gleichmäßige Verteilung zu 5,29 erzeugt dieselbe Wohlfahrt wie die ungleiche Verteilung mit Durchschnitt 6.</p>
+
+    <p><strong>Schritt 5: Atkinson-Index berechnen</strong></p>
+    <p>$$A = 1 - \\frac{M^{EDE}}{\\mu} = 1 - \\frac{5{,}29}{6} \\approx 0{,}12$$</p>
+    <p>Ein Wert von $A = 0{,}12$ bedeutet: Die Gesellschaft würde auf 12% des mittleren Einkommens verzichten, wenn dafür vollständige Gleichheit herrschte.</p>
+
+    <hr>
+
+    <h3>Zusammenfassung: Vorgehen bei der Prüfung</h3>
+    <table>
+      <thead><tr><th>Index</th><th>Formel</th><th>Wichtigste Schritte</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Gini</strong></td>
+          <td>$1 - \\frac{\\sum 2(H-i+\\frac{1}{2})M^i}{H^2 \\mu}$</td>
+          <td>Einkommen ordnen → Koeffizienten 2H-1, 2H-3, … → gewichtete Summe → einsetzen</td>
+        </tr>
+        <tr>
+          <td><strong>Atkinson</strong></td>
+          <td>$1 - \\frac{M^{EDE}}{\\mu}$</td>
+          <td>$U(M)$ aufschreiben → $W$ berechnen → $M^{EDE}$ lösen → $A$ berechnen</td>
+        </tr>
+      </tbody>
+    </table>
+  `},
+
   ],
 
   kk: [
