@@ -548,6 +548,7 @@ label[for="lt-categorySelect"]{color:var(--subtext);font-size:.84rem;}
 .theory-content{
   max-width:72ch;margin:0 auto;font-size:.95rem;
   line-height:1.85;color:var(--text);font-family:var(--font-body);
+  padding-bottom:28px;overflow:hidden;
 }
 .theory-content h1,.theory-content h2{
   font-family:var(--font-display);color:var(--accent);font-weight:700;
