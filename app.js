@@ -10,18 +10,28 @@
  *
  * ============================================================ */
 const APP_PASSWORD = "Graz_2026"; /* <-- HIER ÄNDERN */
-const STORAGE_KEY  = "lernapp_auth_v26"; /* <-- HIER EBENFALLS ÄNDERN */
+const STORAGE_KEY  = "lernapp_auth_v44"; /* <-- HIER EBENFALLS ÄNDERN */
 
 /* ============================================================
  *  SCREEN-MANAGEMENT
  * ============================================================ */
-const SCREENS = ['screen-login', 'screen-subject', 'screen-main', 'screen-karten', 'screen-luecken', 'screen-theory-list', 'screen-theory'];
+const SCREENS = ['screen-login', 'screen-subject', 'screen-main', 'screen-karten', 'screen-luecken', 'screen-theory-list', 'screen-theory', 'screen-mc'];
 
 function showScreen(id) {
   SCREENS.forEach(s => {
     const el = document.getElementById(s);
     if (el) el.classList.toggle('hidden', s !== id);
   });
+  if (typeof renderMathInElement !== 'undefined') {
+    const el = document.getElementById(id);
+    if (el) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });
+  }
 }
 
 /* ============================================================
@@ -119,16 +129,48 @@ function kk_renderCard(c) {
 }
 
 /* ============================================================
- *  THEORIE — aufgerufen von KK und LT
+ *  THEORIE — Navigation, aufgerufen von KK, LT, MC und Theorie-Liste
  * ============================================================ */
+const theoryState = { list: [], index: 0, returnScreen: '' };
+
 function showTheory(id, returnScreen) {
-  const t = ((activeSubject && activeSubject.theory) || []).find(e => e.id === id);
+  const allTheory = (activeSubject && activeSubject.theory) || [];
+  if (!allTheory.length) return;
+  const idx = allTheory.findIndex(t => t.id === id);
+  theoryState.list = allTheory;
+  theoryState.index = idx >= 0 ? idx : 0;
+  theoryState.returnScreen = returnScreen;
+  _renderTheory();
+}
+
+function _renderTheory() {
+  const t = theoryState.list[theoryState.index];
   if (!t) return;
   document.getElementById('theory-title').textContent = t.title;
   document.getElementById('theory-content').innerHTML = t.html;
-  document.getElementById('theory-back').onclick = () => showScreen(returnScreen);
+  document.getElementById('theory-back').onclick = () => showScreen(theoryState.returnScreen);
+
+  const prevBtn = document.getElementById('theory-prev');
+  const nextBtn = document.getElementById('theory-next');
+  const posEl   = document.getElementById('theory-nav-pos');
+  prevBtn.disabled = theoryState.index === 0;
+  nextBtn.disabled = theoryState.index === theoryState.list.length - 1;
+  posEl.textContent = (theoryState.index + 1) + ' / ' + theoryState.list.length;
+
+  // Scroll body back to top on each entry
+  const body = document.getElementById('theory-body');
+  if (body) body.scrollTop = 0;
+
   showScreen('screen-theory');
 }
+
+function theory_prev() {
+  if (theoryState.index > 0) { theoryState.index--; _renderTheory(); }
+}
+function theory_next() {
+  if (theoryState.index < theoryState.list.length - 1) { theoryState.index++; _renderTheory(); }
+}
+
 function kk_showTheory() { showTheory(kk_cards[kk_idx].id, 'screen-karten'); }
 function lt_showTheory() { showTheory(ltS.visible[ltS.index].id, 'screen-luecken'); }
 
@@ -208,17 +250,29 @@ function kk_restartStudy() {
 function kk_markAsKnown() { if (kk_mode !== 'study' || !kk_queue.length) return; kk_queue.shift(); kk_known++; kk_setFlipped(false); kk_render(); }
 function kk_markAsAgain() { if (kk_mode !== 'study' || !kk_queue.length) return; const ci = kk_queue.shift(); kk_queue.push(ci); kk_repeat++; kk_setFlipped(false); kk_render(); }
 
-/* Tastaturkürzel für Karteikarten */
+/* Tastaturkürzel für Karteikarten und Multiple Choice */
 document.addEventListener('keydown', (e) => {
   const active = SCREENS.find(s => { const el = document.getElementById(s); return el && !el.classList.contains('hidden'); });
-  if (active !== 'screen-karten') return;
-  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); kk_toggleFlip(); return; }
-  if (kk_mode === 'study') {
-    if (e.key === '1') kk_markAsAgain();
-    else if (e.key === '2') kk_markAsKnown();
-  } else {
-    if (e.key === 'ArrowRight') kk_nextCard();
-    else if (e.key === 'ArrowLeft') kk_prevCard();
+  if (active === 'screen-karten') {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); kk_toggleFlip(); return; }
+    if (kk_mode === 'study') {
+      if (e.key === '1') kk_markAsAgain();
+      else if (e.key === '2') kk_markAsKnown();
+    } else {
+      if (e.key === 'ArrowRight') kk_nextCard();
+      else if (e.key === 'ArrowLeft') kk_prevCard();
+    }
+  } else if (active === 'screen-mc') {
+    const nextBtn = document.getElementById('mc-btn-next');
+    const answered = nextBtn && !nextBtn.classList.contains('hidden');
+    if ((e.key === 'ArrowRight' || e.key === 'Enter') && answered) { e.preventDefault(); mc_next(); return; }
+    if (!answered) {
+      const idx = parseInt(e.key, 10);
+      if (idx >= 1 && idx <= 4) {
+        const btns = document.getElementById('mc-options').querySelectorAll('.mc-option');
+        if (btns[idx - 1]) { e.preventDefault(); btns[idx - 1].click(); }
+      }
+    }
   }
 });
 
@@ -369,11 +423,177 @@ function lt_init() {
 }
 
 /* ============================================================
+ *  MULTIPLE CHOICE (mc_)
+ * ============================================================ */
+const mcS = { all: [], visible: [], index: 0, mode: 'normal', queue: [], correct: 0, wrong: 0 };
+
+function mc_shuffle(arr) {
+  if (!Array.isArray(arr)) { // called as mc_shuffle() from button — shuffle visible
+    for (let i = mcS.visible.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [mcS.visible[i], mcS.visible[j]] = [mcS.visible[j], mcS.visible[i]];
+    }
+    mcS.index = 0;
+    if (mcS.mode === 'study') { mcS.queue = Array.from({length: mcS.visible.length}, (_, i) => i); mc_shuffleArr(mcS.queue); mcS.correct = 0; mcS.wrong = 0; }
+    mc_render(); return;
+  }
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+}
+function mc_shuffleArr(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } }
+
+function mc_currentCard() {
+  if (mcS.mode === 'study') return mcS.visible[mcS.queue[0]];
+  return mcS.visible[mcS.index];
+}
+
+function mc_render() {
+  const card = mc_currentCard();
+  const statusEl = document.getElementById('mc-status');
+  document.getElementById('mc-btn-normal').classList.toggle('active', mcS.mode === 'normal');
+  document.getElementById('mc-btn-study').classList.toggle('active', mcS.mode === 'study');
+
+  if (!mcS.visible.length) {
+    document.getElementById('mc-question').textContent = 'Keine Multiple-Choice-Fragen vorhanden.';
+    document.getElementById('mc-options').innerHTML = '';
+    document.getElementById('mc-category').textContent = '';
+    document.getElementById('mc-id').textContent = '';
+    statusEl.textContent = '0 Fragen';
+    document.getElementById('mc-btn-next').classList.add('hidden');
+    document.getElementById('mc-btn-theory').classList.add('hidden');
+    document.getElementById('mc-feedback').classList.add('hidden');
+    return;
+  }
+
+  // Study mode: all done
+  if (mcS.mode === 'study' && mcS.queue.length === 0) {
+    document.getElementById('mc-question').textContent = 'Lernrunde abgeschlossen! \u2728';
+    document.getElementById('mc-options').innerHTML =
+      '<button class="lt-btn-primary" style="margin-top:8px" onclick="mc_switchMode(\'study\')">Nochmal</button>' +
+      '<button class="lt-btn" style="margin-top:8px" onclick="mc_switchMode(\'normal\')">Normal-Modus</button>';
+    document.getElementById('mc-category').textContent = '';
+    document.getElementById('mc-id').textContent = '';
+    statusEl.textContent = 'Fertig \u2014 \u2713 ' + mcS.correct + '  \u2717 ' + mcS.wrong;
+    document.getElementById('mc-btn-next').classList.add('hidden');
+    document.getElementById('mc-btn-theory').classList.add('hidden');
+    document.getElementById('mc-feedback').classList.add('hidden');
+    return;
+  }
+
+  // Normal mode: all done
+  if (mcS.mode === 'normal' && mcS.index >= mcS.visible.length) {
+    document.getElementById('mc-question').textContent = 'Alle Fragen beantwortet! \u2728';
+    document.getElementById('mc-options').innerHTML =
+      '<button class="lt-btn-primary" style="margin-top:8px" onclick="mc_switchMode(\'normal\')">Nochmal</button>';
+    document.getElementById('mc-category').textContent = '';
+    document.getElementById('mc-id').textContent = '';
+    statusEl.textContent = '\u2713 ' + mcS.correct + '  \u2717 ' + mcS.wrong + ' von ' + mcS.visible.length;
+    document.getElementById('mc-btn-next').classList.add('hidden');
+    document.getElementById('mc-btn-theory').classList.add('hidden');
+    document.getElementById('mc-feedback').classList.add('hidden');
+    return;
+  }
+
+  // Render question
+  document.getElementById('mc-category').textContent = card.category || '';
+  document.getElementById('mc-id').textContent = 'ID: ' + card.id;
+  document.getElementById('mc-question').textContent = card.question;
+
+  if (mcS.mode === 'normal') {
+    statusEl.textContent = 'Frage ' + (mcS.index + 1) + ' / ' + mcS.visible.length;
+  } else {
+    statusEl.textContent = 'Noch ' + mcS.queue.length + ' offen \u00b7 \u2713 ' + mcS.correct + ' \u00b7 \u2717 ' + mcS.wrong;
+  }
+
+  // Build option buttons — shuffle display order so correct answer isn't always #1
+  const optWrap = document.getElementById('mc-options');
+  optWrap.innerHTML = '';
+  const displayOrder = (card.options || []).map((opt, i) => i);
+  mc_shuffleArr(displayOrder);
+  const shuffledCorrect = displayOrder.indexOf(card.correct); // position of correct in shuffled list
+  displayOrder.forEach((srcIdx, displayIdx) => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-option';
+    btn.textContent = (displayIdx + 1) + '. ' + card.options[srcIdx];
+    btn.onclick = () => mc_select(displayIdx, shuffledCorrect);
+    optWrap.appendChild(btn);
+  });
+
+  // Theory button
+  const hasTheory = !!(activeSubject && (activeSubject.theory || []).find(t => t.id === card.id));
+  document.getElementById('mc-btn-theory').classList.toggle('hidden', !hasTheory);
+
+  // Hide next + feedback
+  document.getElementById('mc-btn-next').classList.add('hidden');
+  document.getElementById('mc-feedback').classList.add('hidden');
+}
+
+function mc_select(chosenIdx, correctIdx) {
+  const card = mc_currentCard();
+  if (!card) return;
+  const optBtns = document.getElementById('mc-options').querySelectorAll('.mc-option');
+  if (!optBtns.length || optBtns[0].disabled) return; // already answered
+
+  optBtns.forEach(b => { b.disabled = true; });
+
+  const isRight = chosenIdx === correctIdx;
+
+  optBtns[correctIdx].classList.add('mc-correct');
+  if (!isRight) optBtns[chosenIdx].classList.add('mc-wrong');
+
+  const fb = document.getElementById('mc-feedback');
+  if (isRight) {
+    fb.textContent = '\u2713 Richtig!';
+    fb.className = 'lt-feedback ok';
+    mcS.correct++;
+  } else {
+    fb.textContent = '\u2717 Falsch \u2014 richtig w\u00e4re: ' + optBtns[correctIdx].textContent.replace(/^\d+\.\s*/, '');
+    fb.className = 'lt-feedback warn';
+    mcS.wrong++;
+    if (mcS.mode === 'study') {
+      const qi = mcS.queue.shift();
+      mcS.queue.push(qi);
+    }
+  }
+  if (isRight && mcS.mode === 'study') mcS.queue.shift();
+  fb.classList.remove('hidden');
+  document.getElementById('mc-btn-next').classList.remove('hidden');
+}
+
+function mc_next() {
+  if (mcS.mode === 'normal') mcS.index++;
+  mc_render();
+}
+
+function mc_switchMode(m) {
+  mcS.mode = m;
+  mcS.index = 0;
+  mcS.correct = 0;
+  mcS.wrong = 0;
+  if (m === 'study') {
+    mcS.queue = Array.from({length: mcS.visible.length}, (_, i) => i);
+    mc_shuffleArr(mcS.queue);
+  }
+  mc_render();
+}
+
+function mc_showTheory() {
+  const card = mc_currentCard();
+  if (card) showTheory(card.id, 'screen-mc');
+}
+
+function mc_init() {
+  mcS.all = ((activeSubject && activeSubject.mc) || []).slice();
+  mcS.visible = mcS.all.slice();
+  mcS.index = 0; mcS.mode = 'normal'; mcS.queue = []; mcS.correct = 0; mcS.wrong = 0;
+  mc_render();
+}
+
+/* ============================================================
  *  THEORIE-ÜBERSICHT (tl_)
  * ============================================================ */
 function tl_init() {
   const list = document.getElementById('tl-list');
-  const entries = (activeSubject && activeSubject.theory) || [];
+  const entries = ((activeSubject && activeSubject.theory) || []).filter(t => !t.hidden);
   if (!entries.length) {
     list.innerHTML = '<p class="tl-empty">Keine Theorie-Einträge vorhanden.</p>';
     return;

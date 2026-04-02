@@ -6,7 +6,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>6. Semester</title><!-- App-Titel hier ändern -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lib/katex.min.css">
 </head>
 <body>
 <div id="app">
@@ -68,6 +72,11 @@
         <span class="main-card-title">Theorie</span>
         <span class="main-card-sub">Erklärungen lesen</span>
       </button>
+      <button class="main-card" onclick="mc_init(); showScreen('screen-mc');">
+        <span class="main-card-icon">🔢</span>
+        <span class="main-card-title">Multiple Choice</span>
+        <span class="main-card-sub">Auswahlfragen</span>
+      </button>
     </div>
   </div>
 </div>
@@ -75,8 +84,8 @@
 <!-- KARTEIKARTEN -->
 <div id="screen-karten" class="hidden">
   <div class="kk-hdr">
-    <h1>📚 Karteikarten</h1>
     <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+    <h1>📚 Karteikarten</h1>
   </div>
   <div class="kk-body">
     <div class="kk-status" id="kk-status"></div>
@@ -116,8 +125,8 @@
 <!-- LÜCKENTEXT -->
 <div id="screen-luecken" class="hidden">
   <div class="lt-hdr">
-    <h1>✏️ Lückentext</h1>
     <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+    <h1>✏️ Lückentext</h1>
   </div>
   <div class="lt-body">
     <div class="lt-toolbar">
@@ -154,11 +163,42 @@
 <!-- THEORIE-ÜBERSICHT -->
 <div id="screen-theory-list" class="hidden">
   <div class="tl-hdr">
-    <h1>📖 Theorie</h1>
     <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+    <h1>📖 Theorie</h1>
   </div>
   <div class="tl-body">
     <div id="tl-list" class="tl-list"></div>
+  </div>
+</div>
+
+<!-- MULTIPLE CHOICE -->
+<div id="screen-mc" class="hidden">
+  <div class="lt-hdr">
+    <button class="back-btn" onclick="showScreen('screen-main')">← Zurück</button>
+    <h1>🔢 Multiple Choice</h1>
+  </div>
+  <div class="lt-body">
+    <div class="kk-status" id="mc-status-row">
+      <span id="mc-status"></span>
+      <section class="kk-mode-switch">
+        <button type="button" class="kk-mode-btn active" id="mc-btn-normal" onclick="mc_switchMode('normal')">Normal</button>
+        <button type="button" class="kk-mode-btn" id="mc-btn-study" onclick="mc_switchMode('study')">Lernmodus</button>
+      </section>
+    </div>
+    <div class="lt-card" id="mc-card">
+      <div class="lt-meta-row">
+        <span id="mc-category" class="lt-pill"></span>
+        <span id="mc-id" class="lt-meta-id"></span>
+      </div>
+      <p id="mc-question" class="lt-question"></p>
+      <div id="mc-options" class="mc-options"></div>
+      <p id="mc-feedback" class="lt-feedback hidden"></p>
+    </div>
+    <div class="lt-actions">
+      <button id="mc-btn-next" onclick="mc_next()" class="lt-btn-primary hidden">Weiter →</button>
+      <button id="mc-btn-theory" onclick="mc_showTheory()" class="kk-theory-btn hidden">📖 Theorie</button>
+      <button id="mc-btn-shuffle" onclick="mc_shuffle()" class="lt-btn">⇄ Mischen</button>
+    </div>
   </div>
 </div>
 
@@ -167,14 +207,26 @@
   <div class="theory-hdr">
     <button class="back-btn" id="theory-back">← Zurück</button>
     <span class="theory-hdr-title" id="theory-title"></span>
+    <div class="theory-nav">
+      <button class="theory-nav-btn" id="theory-prev" onclick="theory_prev()">‹</button>
+      <span class="theory-nav-pos" id="theory-nav-pos"></span>
+      <button class="theory-nav-btn" id="theory-next" onclick="theory_next()">›</button>
+    </div>
   </div>
-  <div class="theory-body">
+  <div class="theory-body" id="theory-body">
     <div id="theory-content" class="theory-content"></div>
   </div>
 </div>
 
 </div><!-- #app -->
+<script src="lib/katex.min.js"></script>
+<script src="lib/auto-render.min.js"></script>
 <script src="cards.js"></script>
+<script src="cards_public_econ.js"></script>
+<script src="cards_micro2.js"></script>
+<script src="cards_oekonometrie1.js"></script>
+<script src="cards_gender_economics.js"></script>
+<script src="cards_bwl.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
