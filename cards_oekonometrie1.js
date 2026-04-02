@@ -1008,5 +1008,369 @@ SUBJECTS.push({
             <h3>Role in Hypothesis Testing</h3>
             <p>Under the classical OLS assumptions (SLR.1–SLR.5 plus normality of $u$), the $t$-statistic $t = \\hat{\\beta}_1 / se(\\hat{\\beta}_1)$ follows a $t(n-2)$ distribution, allowing exact inference in small samples.</p>
         `},
+
+    /* ================================================================
+       IDs 53–62: Schritt-für-Schritt Rechenbeispiele aus den Übungen
+       ================================================================ */
+
+    {id: 53, title: "OLS: Numerisches Rechenbeispiel (vollständig)", html: `
+        <h2>OLS: Schritt-für-Schritt Berechnung</h2>
+        <p>Gegeben sind vier Beobachtungen: $(-1, -2),\ (2, 2),\ (0, 1),\ (3, 7)$, wobei die erste Zahl $x_i$ und die zweite $y_i$ ist.</p>
+
+        <h3>Schritt 1: Mittelwerte berechnen</h3>
+        <p>$$\\bar{x} = \\frac{-1+2+0+3}{4} = \\frac{4}{4} = 1$$</p>
+        <p>$$\\bar{y} = \\frac{-2+2+1+7}{4} = \\frac{8}{4} = 2$$</p>
+
+        <h3>Schritt 2: Hilfstabelle für den Schätzer</h3>
+        <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:6px 12px;text-align:left;">$i$</th>
+            <th style="padding:6px 12px;">$x_i$</th>
+            <th style="padding:6px 12px;">$y_i$</th>
+            <th style="padding:6px 12px;">$x_i - \\bar{x}$</th>
+            <th style="padding:6px 12px;">$y_i - \\bar{y}$</th>
+            <th style="padding:6px 12px;">$(x_i-\\bar{x})(y_i-\\bar{y})$</th>
+            <th style="padding:6px 12px;">$(x_i-\\bar{x})^2$</th>
+          </tr>
+          <tr><td style="padding:4px 12px;">1</td><td style="padding:4px 12px;">−1</td><td style="padding:4px 12px;">−2</td><td style="padding:4px 12px;">−2</td><td style="padding:4px 12px;">−4</td><td style="padding:4px 12px;">8</td><td style="padding:4px 12px;">4</td></tr>
+          <tr><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">1</td><td style="padding:4px 12px;">0</td><td style="padding:4px 12px;">0</td><td style="padding:4px 12px;">1</td></tr>
+          <tr><td style="padding:4px 12px;">3</td><td style="padding:4px 12px;">0</td><td style="padding:4px 12px;">1</td><td style="padding:4px 12px;">−1</td><td style="padding:4px 12px;">−1</td><td style="padding:4px 12px;">1</td><td style="padding:4px 12px;">1</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:4px 12px;">4</td><td style="padding:4px 12px;">3</td><td style="padding:4px 12px;">7</td><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">5</td><td style="padding:4px 12px;">10</td><td style="padding:4px 12px;">4</td></tr>
+          <tr style="border-top:2px solid var(--border);font-weight:bold;"><td style="padding:6px 12px;">Σ</td><td></td><td></td><td></td><td></td><td style="padding:6px 12px;">19</td><td style="padding:6px 12px;">10</td></tr>
+        </table>
+
+        <h3>Schritt 3: Steigung und Achsenabschnitt</h3>
+        <p>$$\\hat{\\beta}_1 = \\frac{\\sum(x_i-\\bar{x})(y_i-\\bar{y})}{\\sum(x_i-\\bar{x})^2} = \\frac{19}{10} = 1.9$$</p>
+        <p>$$\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\cdot \\bar{x} = 2 - 1.9 \\cdot 1 = 0.1$$</p>
+        <p><strong>Regressionsgerade:</strong> $\\hat{y} = 0.1 + 1.9x$</p>
+
+        <h3>Schritt 4: Vorhersagen und Residuen</h3>
+        <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:6px 12px;">$x_i$</th>
+            <th style="padding:6px 12px;">$y_i$</th>
+            <th style="padding:6px 12px;">$\\hat{y}_i = 0.1+1.9x_i$</th>
+            <th style="padding:6px 12px;">$\\hat{u}_i = y_i - \\hat{y}_i$</th>
+            <th style="padding:6px 12px;">$\\hat{u}_i^2$</th>
+          </tr>
+          <tr><td style="padding:4px 12px;">−1</td><td style="padding:4px 12px;">−2</td><td style="padding:4px 12px;">−1.8</td><td style="padding:4px 12px;">−0.2</td><td style="padding:4px 12px;">0.04</td></tr>
+          <tr><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">2</td><td style="padding:4px 12px;">3.9</td><td style="padding:4px 12px;">−1.9</td><td style="padding:4px 12px;">3.61</td></tr>
+          <tr><td style="padding:4px 12px;">0</td><td style="padding:4px 12px;">1</td><td style="padding:4px 12px;">0.1</td><td style="padding:4px 12px;">0.9</td><td style="padding:4px 12px;">0.81</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:4px 12px;">3</td><td style="padding:4px 12px;">7</td><td style="padding:4px 12px;">5.8</td><td style="padding:4px 12px;">1.2</td><td style="padding:4px 12px;">1.44</td></tr>
+          <tr style="border-top:2px solid var(--border);font-weight:bold;"><td colspan="4" style="padding:6px 12px;">SSR = $\\sum \\hat{u}_i^2$</td><td style="padding:6px 12px;">5.90</td></tr>
+        </table>
+
+        <h3>Schritt 5: Gütemaße (SST, SSE, R²)</h3>
+        <p>$$SST = \\sum(y_i - \\bar{y})^2 = (-4)^2 + 0^2 + (-1)^2 + 5^2 = 16+0+1+25 = 42$$</p>
+        <p>$$SSE = SST - SSR = 42 - 5.90 = 36.10$$</p>
+        <p>$$R^2 = \\frac{SSE}{SST} = \\frac{36.10}{42} \\approx 0.8595$$</p>
+        <p>Die Regressionsgerade erklärt ca. <strong>85,95%</strong> der Varianz von $y$.</p>
+
+        <h3>Schritt 6: Extrapolation</h3>
+        <p>Vorhersage für $x = 1$: $\\hat{y} = 0.1 + 1.9 \\cdot 1 = 2.0$</p>
+        <p>Vorhersage für $x = 4$: $\\hat{y} = 0.1 + 1.9 \\cdot 4 = 7.7$</p>
+    `},
+
+    {id: 54, title: "Zero Conditional Mean: Beweise E(ux)=0 und Cov(u,x)=0", html: `
+        <h2>Zero Conditional Mean: Algebraische Beweise</h2>
+        <p>Die Annahme SLR.4 lautet: $E(u|x) = 0$ für alle Werte von $x$. Daraus folgen zwei wichtige Konsequenzen.</p>
+
+        <h3>Beweis 1: $E(u \\cdot x) = 0$</h3>
+        <p>Wir verwenden das <strong>Gesetz der iterierten Erwartungen</strong> (Law of Iterated Expectations, LIE):</p>
+        <p>$$E(ux) = E\\bigl[E(ux \\mid x)\\bigr]$$</p>
+        <p>Im inneren Erwartungswert ist $x$ bekannt (nicht zufällig), also kann man $x$ herausziehen:</p>
+        <p>$$= E\\bigl[x \\cdot E(u \\mid x)\\bigr]$$</p>
+        <p>Wegen $E(u|x) = 0$ gilt:</p>
+        <p>$$= E[x \\cdot 0] = E[0] = 0$$</p>
+        <p><strong>Ergebnis:</strong> $E(ux) = 0$ — Fehlerterm und Regressor sind unkorreliert in Erwartung.</p>
+
+        <h3>Beweis 2: $\\text{Cov}(u, x) = 0$</h3>
+        <p>Die Kovarianz ist definiert als:</p>
+        <p>$$\\text{Cov}(u, x) = E(ux) - E(u) \\cdot E(x)$$</p>
+        <p>Aus SLR.4 folgt auch $E(u) = E[E(u|x)] = E[0] = 0$ (LIE wieder). Also:</p>
+        <p>$$\\text{Cov}(u, x) = 0 - 0 \\cdot E(x) = 0$$</p>
+        <p><strong>Wichtig:</strong> Die Umkehrung gilt <em>nicht</em> — $\\text{Cov}(u,x)=0$ impliziert <em>nicht</em> $E(u|x)=0$. Letzteres ist die stärkere Bedingung.</p>
+
+        <hr>
+        <h3>Warum ist das wichtig?</h3>
+        <p>Die Momentbedingungen $E(u)=0$ und $E(ux)=0$ sind genau die Grundlage der <strong>Methode der Momente</strong> für OLS. Sie liefern die zwei Normalgleichungen:</p>
+        <p>$$\\frac{1}{n}\\sum_{i=1}^n \\hat{u}_i = 0 \\qquad \\text{und} \\qquad \\frac{1}{n}\\sum_{i=1}^n x_i \\hat{u}_i = 0$$</p>
+        <p>Aus denen die OLS-Schätzer $\\hat{\\beta}_0$ und $\\hat{\\beta}_1$ direkt folgen.</p>
+    `},
+
+    {id: 55, title: "Homoskedastizität: Bedingt vs. Unbedingt", html: `
+        <h2>Homoskedastizität: Bedingte vs. Unbedingte Varianz</h2>
+
+        <h3>Definitionen</h3>
+        <p><strong>Bedingte Homoskedastizität (SLR.5):</strong> $\\text{Var}(u|x) = \\sigma^2$ — die Varianz des Fehlerterms ist konstant für alle $x$-Werte.</p>
+        <p><strong>Unbedingte Varianz:</strong> $\\text{Var}(u) = E[u^2] - (E[u])^2 = E[u^2]$ (da $E[u]=0$).</p>
+
+        <h3>Beweis: Bedingte ⟹ Unbedingte Homoskedastizität</h3>
+        <p>Wir verwenden das <strong>Gesetz der totalen Varianz</strong>:</p>
+        <p>$$\\text{Var}(u) = E\\bigl[\\text{Var}(u|x)\\bigr] + \\text{Var}\\bigl[E(u|x)\\bigr]$$</p>
+        <p>Einsetzen von SLR.4 ($E(u|x)=0$) und SLR.5 ($\\text{Var}(u|x)=\\sigma^2$):</p>
+        <p>$$\\text{Var}(u) = E[\\sigma^2] + \\text{Var}[0] = \\sigma^2 + 0 = \\sigma^2$$</p>
+        <p><strong>Ergebnis:</strong> Bedingte Homoskedastizität impliziert unbedingte Homoskedastizität mit demselben $\\sigma^2$.</p>
+
+        <h3>Umkehrung gilt nicht</h3>
+        <p>Beispiel: Wenn $\\text{Var}(u|x) = x^2$ (Heteroskedastizität), kann die unbedingte Varianz trotzdem konstant sein — aber SLR.5 ist verletzt. OLS ist dann noch konsistent, aber nicht mehr BLUE.</p>
+
+        <hr>
+        <h3>Praktische Bedeutung</h3>
+        <ul>
+          <li>Heteroskedastizität → Standardfehler der OLS-Schätzer sind verzerrt</li>
+          <li>Tests: White-Test, Breusch-Pagan-Test</li>
+          <li>Korrektur: Robuste (HC) Standardfehler oder WLS</li>
+        </ul>
+    `},
+
+    {id: 56, title: "OLS Second-Order Conditions: Hessian-Matrix", html: `
+        <h2>OLS: Zweite Ordnungsbedingungen (Hessian-Matrix)</h2>
+        <p>OLS minimiert $SSR(b_0, b_1) = \\sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2$. Die FOC liefern die Normalgleichungen — aber wir müssen sicherstellen, dass es ein <em>Minimum</em> und kein Sattelpunkt ist.</p>
+
+        <h3>Die Hessian-Matrix</h3>
+        <p>Die zweiten partiellen Ableitungen von SSR:</p>
+        <p>$$\\frac{\\partial^2 SSR}{\\partial b_0^2} = 2n = A$$</p>
+        <p>$$\\frac{\\partial^2 SSR}{\\partial b_1^2} = 2\\sum x_i^2 = C$$</p>
+        <p>$$\\frac{\\partial^2 SSR}{\\partial b_0 \\partial b_1} = 2\\sum x_i = B$$</p>
+        <p>Die Hessian-Matrix ist: $H = 2\\begin{pmatrix} n & \\sum x_i \\\\ \\sum x_i & \\sum x_i^2 \\end{pmatrix}$</p>
+
+        <h3>Bedingung für positiv-definit</h3>
+        <p>$H$ ist positiv-definit genau dann, wenn:</p>
+        <ol>
+          <li>$A = 2n > 0$ ✓ (gilt immer für $n \\geq 1$)</li>
+          <li>$\\det(H) = AC - B^2 = 4n\\sum x_i^2 - 4(\\sum x_i)^2 > 0$</li>
+        </ol>
+        <p>Dies vereinfacht sich zu:</p>
+        <p>$$n \\sum x_i^2 - \\left(\\sum x_i\\right)^2 > 0$$</p>
+
+        <h3>Warum gilt das? Cauchy-Schwarz</h3>
+        <p>Nach der <strong>Cauchy-Schwarz-Ungleichung</strong>:</p>
+        <p>$$\\left(\\sum_{i=1}^n x_i \\cdot 1\\right)^2 \\leq \\left(\\sum x_i^2\\right)\\left(\\sum 1^2\\right) = n\\sum x_i^2$$</p>
+        <p>Gleichheit gilt genau dann, wenn alle $x_i$ identisch sind. Wenn also <strong>SLR.3</strong> (Varianz in $x$) gilt, ist die Ungleichung streng, und die Hessian ist positiv-definit → die FOC-Lösung ist ein globales Minimum.</p>
+    `},
+
+    {id: 57, title: "Pareto-Verteilung: Method of Moments", html: `
+        <h2>Pareto-Verteilung: Method of Moments Schätzer</h2>
+
+        <h3>Dichtefunktion und Erwartungswert</h3>
+        <p>Die Pareto-Verteilung mit Parameter $a > 1$ hat die Dichte:</p>
+        <p>$$f(x) = \\frac{a}{x^{a+1}} \\quad \\text{für } x \\geq 1$$</p>
+        <p>Der Erwartungswert berechnet sich durch Integration:</p>
+        <p>$$E[X] = \\int_1^\\infty x \\cdot \\frac{a}{x^{a+1}}\\,dx = a\\int_1^\\infty x^{-a}\\,dx = a \\cdot \\left[\\frac{x^{-a+1}}{-a+1}\\right]_1^\\infty = \\frac{a}{a-1}$$</p>
+        <p>(Das Integral konvergiert für $a > 1$.)</p>
+
+        <h3>Method of Moments: Schätzer herleiten</h3>
+        <p>Wir setzen den theoretischen Erwartungswert gleich dem Stichprobenmittelwert:</p>
+        <p>$$E[X] = \\frac{a}{a-1} \\overset{!}{=} \\bar{X}$$</p>
+        <p>Auflösen nach $a$:</p>
+        <p>$$a \\cdot 1 = \\bar{X}(a-1) = \\bar{X}a - \\bar{X}$$</p>
+        <p>$$a - \\bar{X}a = -\\bar{X} \\implies a(1-\\bar{X}) = -\\bar{X}$$</p>
+        <p>$$\\boxed{\\hat{a} = \\frac{\\bar{X}}{\\bar{X}-1}}$$</p>
+
+        <h3>Numerisches Beispiel</h3>
+        <p>Stichprobe: $\\{1.93,\\ 1.03,\\ 1.34,\\ 1.06,\\ 1.13,\\ 5.05\\}$</p>
+        <p>$$\\bar{X} = \\frac{1.93+1.03+1.34+1.06+1.13+5.05}{6} = \\frac{11.54}{6} \\approx 1.9233$$</p>
+        <p>$$\\hat{a} = \\frac{1.9233}{1.9233 - 1} = \\frac{1.9233}{0.9233} \\approx 2.083$$</p>
+        <p><strong>Interpretation:</strong> Für $a \\approx 2.083$ besitzt die Verteilung einen endlichen Erwartungswert (da $a > 1$) und eine endliche Varianz (da $a > 2$).</p>
+
+        <hr>
+        <h3>Merkhilfe</h3>
+        <p>Die Formel $\\hat{a} = \\bar{X}/(\\bar{X}-1)$ gilt nur für $\\bar{X} > 1$ (was bei der Pareto-Verteilung mit Minimum 1 immer der Fall sein sollte).</p>
+    `},
+
+    {id: 58, title: "Log-Modelle, Quadratische Modelle & Elastizitäten", html: `
+        <h2>Log-Modelle, Quadratische Modelle & Elastizitäten</h2>
+
+        <h3>1. Log-Log Modell (konstante Elastizität)</h3>
+        <p>$$\\ln(y) = \\beta_0 + \\beta_1 \\ln(x) + u$$</p>
+        <p><strong>Interpretation:</strong> $\\beta_1$ ist die Elastizität — ein 1%-Anstieg von $x$ führt zu einem $\\beta_1$%-Anstieg von $y$.</p>
+        <p><em>Beispiel (Hauspreis, Log-Log):</em> $\\hat{\\beta}_1 = 0.312$ → 1% mehr Fläche → 0.312% höherer Preis.</p>
+
+        <h3>2. Log-Lineares Modell (semi-logarithmisch)</h3>
+        <p>$$\\ln(y) = \\gamma_0 + \\gamma_1 x + u$$</p>
+        <p><strong>Marginaleffekt:</strong> $\\frac{\\partial y}{\\partial x} = \\gamma_1 \\cdot y$</p>
+        <p><strong>Elastizität (variabel):</strong> $\\varepsilon = \\gamma_1 \\cdot x$</p>
+        <p><em>Beispiel:</em> $\\hat{\\gamma}_1 = 0.000411$, bei $x=2000$ sqft: $\\varepsilon = 0.000411 \\times 2000 \\approx 0.822$</p>
+        <p>Bei $x=4000$: $\\varepsilon \\approx 1.644$; bei $x=6000$: $\\varepsilon \\approx 2.466$</p>
+
+        <h3>3. Quadratisches Modell</h3>
+        <p>$$y = \\delta_0 + \\delta_1 x + \\delta_2 x^2 + u$$</p>
+        <p><strong>Marginaleffekt (nicht konstant):</strong> $\\frac{\\partial y}{\\partial x} = \\delta_1 + 2\\delta_2 x$</p>
+        <p><strong>Elastizität:</strong> $\\varepsilon = (\\delta_1 + 2\\delta_2 x) \\cdot \\frac{x}{y}$</p>
+        <p><em>Beispiel:</em> $\\hat{\\delta}_1 = 134.2,\\ \\hat{\\delta}_2 = -0.01$</p>
+        <ul>
+          <li>Bei $x=2000$: $ME = 134.2 - 2 \\cdot 0.01 \\cdot 2000 = 134.2 - 40 = 94.2$ $/sqft</li>
+          <li>Bei $x=4000$: $ME = 134.2 - 80 = 54.2$ $/sqft</li>
+          <li>Bei $x=6000$: $ME = 134.2 - 120 = 14.2$ $/sqft</li>
+        </ul>
+        <p>Der abnehmende Marginaleffekt spiegelt diminishing returns wider.</p>
+
+        <h3>4. Lineares Modell (Vergleich)</h3>
+        <p>$$y = \\alpha_0 + \\alpha_1 x + u$$</p>
+        <p>$\\hat{\\alpha}_1 = 92.75$ $/sqft → Preis steigt linear um $92.75 pro Quadratfuß.</p>
+        <p><strong>Elastizität (variabel):</strong> $\\varepsilon = \\alpha_1 \\cdot x / \\hat{y}$</p>
+
+        <hr>
+        <h3>Zusammenfassung</h3>
+        <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+          <tr style="border-bottom:1px solid var(--border);"><th style="padding:6px;">Modell</th><th style="padding:6px;">ME</th><th style="padding:6px;">Elastizität</th></tr>
+          <tr><td style="padding:4px 6px;">Linear</td><td style="padding:4px 6px;">$\\alpha_1$ (konstant)</td><td style="padding:4px 6px;">$\\alpha_1 x/y$ (variabel)</td></tr>
+          <tr><td style="padding:4px 6px;">Log-Log</td><td style="padding:4px 6px;">$\\beta_1 y/x$ (variabel)</td><td style="padding:4px 6px;">$\\beta_1$ (konstant)</td></tr>
+          <tr><td style="padding:4px 6px;">Log-Linear</td><td style="padding:4px 6px;">$\\gamma_1 y$ (variabel)</td><td style="padding:4px 6px;">$\\gamma_1 x$ (variabel)</td></tr>
+          <tr><td style="padding:4px 6px;">Quadratisch</td><td style="padding:4px 6px;">$\\delta_1+2\\delta_2 x$ (variabel)</td><td style="padding:4px 6px;">$(\\delta_1+2\\delta_2 x)x/y$</td></tr>
+        </table>
+    `},
+
+    {id: 59, title: "Gemeinsame Verteilungen: Tabelle, E(X), bedingte Verteilung", html: `
+        <h2>Gemeinsame Verteilungen: Schritt-für-Schritt</h2>
+        <p>Gegeben sei folgende unvollständige Tabelle der gemeinsamen Verteilung von $X$ und $Y$:</p>
+
+        <h3>Schritt 1: Ausgangstabelle</h3>
+        <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+          <tr style="border-bottom:1px solid var(--border);"><th style="padding:6px;">$X \\setminus Y$</th><th style="padding:6px;">$Y=0$</th><th style="padding:6px;">$Y=1$</th><th style="padding:6px;">$P(X=x)$</th></tr>
+          <tr><td style="padding:4px 8px;">$X=2$</td><td style="padding:4px 8px;">0.10</td><td style="padding:4px 8px;">?</td><td style="padding:4px 8px;">0.25</td></tr>
+          <tr><td style="padding:4px 8px;">$X=4$</td><td style="padding:4px 8px;">0.35</td><td style="padding:4px 8px;">?</td><td style="padding:4px 8px;">?</td></tr>
+          <tr><td style="padding:4px 8px;">$X=6$</td><td style="padding:4px 8px;">?</td><td style="padding:4px 8px;">0.15</td><td style="padding:4px 8px;">?</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:4px 8px;"><strong>$P(Y=y)$</strong></td><td style="padding:4px 8px;">?</td><td style="padding:4px 8px;">0.30</td><td style="padding:4px 8px;"><strong>1.00</strong></td></tr>
+        </table>
+
+        <h3>Schritt 2: Fehlende Werte berechnen</h3>
+        <ol>
+          <li>$P(X=2, Y=1) = P(X=2) - P(X=2,Y=0) = 0.25 - 0.10 = 0.15$</li>
+          <li>$P(Y=0) = 1 - P(Y=1) = 1 - 0.30 = 0.70$</li>
+          <li>$P(X=6, Y=0) = P(Y=0) - P(X=2,Y=0) - P(X=4,Y=0) = 0.70 - 0.10 - 0.35 = 0.25$</li>
+          <li>$P(X=6) = P(X=6,Y=0) + P(X=6,Y=1) = 0.25 + 0.15 = 0.40$</li>
+          <li>$P(X=4, Y=1) = P(Y=1) - P(X=2,Y=1) - P(X=6,Y=1) = 0.30 - 0.15 - 0.15 = 0.00$</li>
+          <li>$P(X=4) = 0.35 + 0.00 = 0.35$</li>
+        </ol>
+
+        <h3>Schritt 3: Vollständige Tabelle</h3>
+        <table style="border-collapse:collapse;width:100%;font-size:.9rem;">
+          <tr style="border-bottom:1px solid var(--border);"><th style="padding:6px;">$X \\setminus Y$</th><th style="padding:6px;">$Y=0$</th><th style="padding:6px;">$Y=1$</th><th style="padding:6px;">$P(X=x)$</th></tr>
+          <tr><td style="padding:4px 8px;">$X=2$</td><td style="padding:4px 8px;">0.10</td><td style="padding:4px 8px;">0.15</td><td style="padding:4px 8px;">0.25</td></tr>
+          <tr><td style="padding:4px 8px;">$X=4$</td><td style="padding:4px 8px;">0.35</td><td style="padding:4px 8px;">0.00</td><td style="padding:4px 8px;">0.35</td></tr>
+          <tr><td style="padding:4px 8px;">$X=6$</td><td style="padding:4px 8px;">0.25</td><td style="padding:4px 8px;">0.15</td><td style="padding:4px 8px;">0.40</td></tr>
+          <tr style="border-top:1px solid var(--border);"><td style="padding:4px 8px;"><strong>$P(Y=y)$</strong></td><td style="padding:4px 8px;">0.70</td><td style="padding:4px 8px;">0.30</td><td style="padding:4px 8px;"><strong>1.00</strong></td></tr>
+        </table>
+
+        <h3>Schritt 4: Erwartungswert $E(X)$</h3>
+        <p>$$E(X) = 2 \\cdot 0.25 + 4 \\cdot 0.35 + 6 \\cdot 0.40 = 0.50 + 1.40 + 2.40 = 4.30$$</p>
+        <p>Hinweis: Wenn in deiner Übung andere Ausgangswerte stehen, gilt dasselbe Vorgehen — hier als allgemeines Muster zu verstehen.</p>
+
+        <h3>Schritt 5: Bedingte Verteilung $P(X|Y=1)$</h3>
+        <p>$$P(X=2|Y=1) = \\frac{P(X=2,Y=1)}{P(Y=1)} = \\frac{0.15}{0.30} = 0.50$$</p>
+        <p>$$P(X=4|Y=1) = \\frac{0.00}{0.30} = 0.00$$</p>
+        <p>$$P(X=6|Y=1) = \\frac{0.15}{0.30} = 0.50$$</p>
+        <p>$$E(X|Y=1) = 2 \\cdot 0.50 + 4 \\cdot 0 + 6 \\cdot 0.50 = 1 + 0 + 3 = 4.0$$</p>
+
+        <h3>Schritt 6: Unabhängigkeitstest</h3>
+        <p>$X$ und $Y$ sind unabhängig genau dann, wenn $P(X=x, Y=y) = P(X=x) \\cdot P(Y=y)$ für alle $x, y$.</p>
+        <p>Prüfen: $P(X=4, Y=1) = 0 \\neq 0.35 \\cdot 0.30 = 0.105$</p>
+        <p><strong>→ $X$ und $Y$ sind nicht unabhängig.</strong></p>
+    `},
+
+    {id: 60, title: "Normalverteilung: Lineare Transformation & Z-Standardisierung", html: `
+        <h2>Normalverteilung: Lineare Transformation & Wahrscheinlichkeitsberechnung</h2>
+
+        <h3>Ausgangssituation</h3>
+        <p>Gegeben: Absatz $Q \\sim N(300, 100)$ (Einheiten), Preis = $20/Einheit, Fixkosten $F = 1\\ 500$.</p>
+        <p>Umsatz: $S = 20 \\cdot Q - 1\\ 500$</p>
+
+        <h3>Schritt 1: Erwartungswert von $S$</h3>
+        <p>Lineare Transformationsregel: $E(aX + b) = a \\cdot E(X) + b$</p>
+        <p>$$E(S) = 20 \\cdot E(Q) - 1\\ 500 = 20 \\cdot 300 - 1\\ 500 = 6\\ 000 - 1\\ 500 = 4\\ 500$$</p>
+        <p>Hinweis: In der Übung mit $E(Q)=498$ und $F=540$: $E(S)=20\\cdot498-540=9\\ 960-540=9\\ 420$. Das allgemeine Vorgehen ist identisch.</p>
+
+        <h3>Schritt 2: Varianz von $S$</h3>
+        <p>Varianzregel: $\\text{Var}(aX + b) = a^2 \\cdot \\text{Var}(X)$</p>
+        <p>$$\\text{Var}(S) = 20^2 \\cdot \\text{Var}(Q) = 400 \\cdot 100 = 40\\ 000$$</p>
+        <p>$$\\sigma_S = \\sqrt{40\\ 000} = 200$$</p>
+        <p><strong>Verteilung:</strong> $S \\sim N(4\\ 500,\\ 40\\ 000)$</p>
+
+        <h3>Schritt 3: Wahrscheinlichkeit berechnen (aus der Übung)</h3>
+        <p>Konkrete Werte der Übung: $Q \\sim N(498, 2890)$, Umsatz $S = 20Q - 540$</p>
+        <p>$$E(S) = 20 \\cdot 498 - 540 = 9\\ 420, \\quad \\text{Var}(S) = 400 \\cdot 2890 = 1\\ 156\\ 000, \\quad \\sigma_S \\approx 1\\ 075.2$$</p>
+        <p>Gesucht: $P(S > 7\\ 500)$</p>
+        <p><strong>Z-Standardisierung:</strong></p>
+        <p>$$Z = \\frac{S - \\mu_S}{\\sigma_S} = \\frac{7\\ 500 - 9\\ 420}{1\\ 075.2} \\approx \\frac{-1\\ 920}{1\\ 075.2} \\approx -1.785$$</p>
+        <p>$$P(S > 7\\ 500) = P\\!\\left(Z > -1.785\\right) = P(Z < 1.785) = \\Phi(1.785) \\approx 0.963$$</p>
+        <p><strong>Ergebnis:</strong> Mit ca. 96,3% Wahrscheinlichkeit übersteigt der Umsatz 7 500.</p>
+
+        <h3>Symmetrieregel der Normalverteilung</h3>
+        <p>$$P(Z > -c) = P(Z < c) = \\Phi(c)$$</p>
+        <p>Diese Symmetrie ist entscheidend bei negativen $z$-Werten — immer das Vorzeichen umdrehen und in der Tabelle nachschlagen.</p>
+
+        <hr>
+        <h3>Allgemeines Schema</h3>
+        <ol>
+          <li>$E(aX+b) = aE(X)+b$, $\\text{Var}(aX+b) = a^2 \\text{Var}(X)$</li>
+          <li>$Z = (X - \\mu)/\\sigma$, dann $P(X > c) = P(Z > (c-\\mu)/\\sigma)$</li>
+          <li>Bei negativem $z$: $P(Z > -c) = \\Phi(c)$</li>
+        </ol>
+    `},
+
+    {id: 61, title: "Algebraische Beweise: Varianz, Kovarianz & Σ-Identitäten", html: `
+        <h2>Algebraische Beweise</h2>
+
+        <h3>Beweis 1: $\\sum x_i^2 - n\\bar{x}^2 = \\sum(x_i - \\bar{x})^2$</h3>
+        <p>Rechte Seite ausmultiplizieren:</p>
+        <p>$$\\sum(x_i-\\bar{x})^2 = \\sum\\bigl(x_i^2 - 2x_i\\bar{x} + \\bar{x}^2\\bigr) = \\sum x_i^2 - 2\\bar{x}\\sum x_i + n\\bar{x}^2$$</p>
+        <p>Da $\\sum x_i = n\\bar{x}$:</p>
+        <p>$$= \\sum x_i^2 - 2\\bar{x}(n\\bar{x}) + n\\bar{x}^2 = \\sum x_i^2 - 2n\\bar{x}^2 + n\\bar{x}^2 = \\sum x_i^2 - n\\bar{x}^2 \\ \\square$$</p>
+
+        <h3>Beweis 2: $\\sum(x_i-\\bar{x})(y_i-\\bar{y}) = \\sum(x_i-\\bar{x})y_i$</h3>
+        <p>Linke Seite ausmultiplizieren:</p>
+        <p>$$\\sum(x_i-\\bar{x})(y_i-\\bar{y}) = \\sum(x_i-\\bar{x})y_i - \\bar{y}\\sum(x_i-\\bar{x})$$</p>
+        <p>Da $\\sum(x_i-\\bar{x}) = 0$:</p>
+        <p>$$= \\sum(x_i-\\bar{x})y_i - \\bar{y} \\cdot 0 = \\sum(x_i-\\bar{x})y_i \\ \\square$$</p>
+
+        <h3>Beweis 3: $E(a + bX) = a + bE(X)$</h3>
+        <p>$$E(a+bX) = \\sum_x (a+bx)P(X=x) = a\\sum_x P(X=x) + b\\sum_x x P(X=x) = a \\cdot 1 + b \\cdot E(X) \\ \\square$$</p>
+
+        <h3>Beweis 4: $\\text{Var}(a + bX) = b^2 \\text{Var}(X)$</h3>
+        <p>$$\\text{Var}(a+bX) = E\\bigl[(a+bX - E(a+bX))^2\\bigr] = E\\bigl[(a+bX-a-bE(X))^2\\bigr]$$</p>
+        <p>$$= E\\bigl[b^2(X-E(X))^2\\bigr] = b^2 E\\bigl[(X-E(X))^2\\bigr] = b^2 \\text{Var}(X) \\ \\square$$</p>
+
+        <h3>Beweis 5: $\\text{Cov}(X,Y) = E(XY) - E(X)E(Y)$</h3>
+        <p>$$\\text{Cov}(X,Y) = E\\bigl[(X-\\mu_X)(Y-\\mu_Y)\\bigr] = E(XY - X\\mu_Y - \\mu_X Y + \\mu_X\\mu_Y)$$</p>
+        <p>$$= E(XY) - \\mu_Y E(X) - \\mu_X E(Y) + \\mu_X\\mu_Y = E(XY) - \\mu_X\\mu_Y - \\mu_X\\mu_Y + \\mu_X\\mu_Y$$</p>
+        <p>$$= E(XY) - E(X)E(Y) \\ \\square$$</p>
+
+        <h3>Varianz-Kurzformel</h3>
+        <p>$$\\text{Var}(X) = E(X^2) - (E(X))^2$$</p>
+        <p>Beweis: $\\text{Cov}(X,X) = E(X^2) - E(X)^2 = \\text{Var}(X)$. $\\square$</p>
+    `},
+
+    {id: 62, title: "Regressionsinterpretation: Geburtsgewicht, Konsum & OVB", html: `
+        <h2>Regressionsinterpretation: Praxisbeispiele</h2>
+
+        <h3>1. Geburtsgewicht-Regression</h3>
+        <p>Modell: $\\widehat{bwght} = 119.77 - 0.514 \\cdot cigs$</p>
+        <ul>
+          <li><strong>Intercept:</strong> Bei 0 Zigaretten beträgt das vorhergesagte Geburtsgewicht 119.77 Unzen.</li>
+          <li><strong>Slope:</strong> Eine Zigarette mehr pro Tag reduziert das Geburtsgewicht um 0.514 Unzen.</li>
+          <li>Bei $cigs = 20$: $\\hat{bwght} = 119.77 - 0.514 \\times 20 = 119.77 - 10.28 = 109.49$ Unzen</li>
+        </ul>
+        <p><strong>Modellkritik:</strong> Für sehr hohe $cigs$-Werte (z.B. $cigs > 233$) würde das Modell negative Geburtsgewichte vorhersagen — biologisch unmöglich. Das Modell sollte nur im beobachteten Bereich interpretiert werden.</p>
+
+        <h3>2. Konsumfunktion (MPC)</h3>
+        <p>Modell: $\\widehat{cons} = -184.01 + 0.801 \\cdot inc$</p>
+        <ul>
+          <li><strong>MPC:</strong> Die marginale Konsumquote beträgt 0.801 — von jedem zusätzlichen Euro Einkommen werden 80.1 Cent konsumiert.</li>
+          <li>Bei $inc = 0$: $\\widehat{cons} = -184.01$ — wirtschaftlich nicht sinnvoll (außerhalb des beobachteten Bereichs).</li>
+        </ul>
+
+        <h3>3. Reparametrisierung des Fehlerterms</h3>
+        <p>Wenn $E(u) = \\mu \\neq 0$, schreibe $u = \\mu + e$ mit $E(e)=0$:</p>
+        <p>$$y = \\beta_0 + \\beta_1 x + \\mu + e = (\\beta_0 + \\mu) + \\beta_1 x + e = \\alpha_0 + \\beta_1 x + e$$</p>
+        <p>Der nicht-null Mittelwert wird in den Intercept $\\alpha_0 = \\beta_0 + \\mu$ absorbiert. Deshalb ist $E(u)=0$ keine echte Einschränkung, solange ein Intercept enthalten ist.</p>
+
+        <h3>4. Omitted Variable Bias (OVB)</h3>
+        <p>Beispiel: Inzinerator-Studie (Müllverbrennungsanlage auf Immobilienpreise).</p>
+        <p>Simples Modell (nur Abstand): positiver Koeffizient → häuser NÄHER an Anlage sind teurer?</p>
+        <p><strong>Erklärung:</strong> Die Anlage wurde in ärmeren Vierteln gebaut, die zunächst günstigere Grundstücke hatten. Sozioökonomischer Status ist eine Omitted Variable, die mit dem Abstand korreliert → OVB verzerrt den Schätzer.</p>
+        <p>Formal: $\\text{plim}(\\hat{\\beta}_1) = \\beta_1 + \\beta_2 \\cdot \\delta_{12}$, wobei $\\delta_{12}$ die Regression der omitted variable auf $x_1$ ist.</p>
+    `},
     ],
 });
